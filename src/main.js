@@ -1,84 +1,81 @@
-/*eslint-disable */
+import babelpolyfill from 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
-import router from './router'
-import store from './store/'
-import VueLazyload from 'vue-lazyload'
-import infiniteScroll from 'vue-infinite-scroll'
-import VueCookie from 'vue-cookie'
-import { loginCheckWithoutCode } from './api'
-import { Button, Pagination, Checkbox, Icon, Autocomplete, Loading, Message, Notification, Steps, Step, Table, TableColumn, Input, Dialog, Select, Option, Form, FormItem } from 'element-ui'
-import { getStore } from '/utils/storage'
-// import $ from 'jquery'
-Vue.use(Button)
-Vue.use(Form)
-Vue.use(FormItem)
-Vue.use(Pagination)
-Vue.use(Checkbox)
-Vue.use(Icon)
-Vue.use(Autocomplete)
-Vue.use(Steps)
-Vue.use(Step)
-Vue.use(Table)
-Vue.use(TableColumn)
-Vue.use(Input)
-Vue.use(Dialog)
-Vue.use(Select)
-Vue.use(Option)
-Vue.use(Loading.directive)
-Vue.prototype.$loading = Loading.service
-Vue.prototype.$notify = Notification
-Vue.prototype.$message = Message
-Vue.use(infiniteScroll)
-Vue.use(VueCookie)
-Vue.use(VueLazyload, {
-  // preLoad: 1.3,
-  // error: 'dist/error.png',
-  loading: require('./assets/images/loading.gif')
-  // attempt: 1
+import ElementUI from 'element-ui'
+import VueResource from 'vue-resource'
+import 'element-ui/lib/theme-default/index.css'
+import $ from 'jquery'
+
+/*UE编辑器*/
+import '../static/UE/ueditor.config'
+import '../static/UE/ueditor.all'
+import '../static/UE/lang/zh-cn/zh-cn'
+// import '../static/UE/ueditor.parse.min'
+
+// import './assets/theme/theme-darkblue/index.css'
+import VueRouter from 'vue-router'
+import store from './vuex/store'
+import Vuex from 'vuex'
+//import NProgress from 'nprogress'
+//import 'nprogress/nprogress.css'
+import routes from './routes'
+import Mock from './mock'
+import util from './common/js/util.js'
+
+// import api from '/common/js/interface'
+Mock.bootstrap();
+import 'font-awesome/css/font-awesome.min.css'
+
+Vue.use(ElementUI);
+Vue.use(VueRouter);
+Vue.use(Vuex);
+Vue.use(VueResource);
+
+//NProgress.configure({ showSpinner: false });
+
+const router = new VueRouter({
+    routes
 })
-Vue.config.devtools = true
-Vue.config.productionTip = false
-const whiteList =
-  ['/home', '/login', '/project',
-    '/service', '/search', '/refreshsearch', '/about', '/tutor',
-    '/base', '/guide', '/detail', '/projectDetail', '/contact'] // 不需要登陆的页面
-router.beforeEach(function (to, from, next) {
-  let params = {
-    params: {
-      token: getStore('token')
-    },
-    username: '',
-    password: ''
-  }
-  console.log("beforeEach:" ,to)
-  let userParams = JSON.parse(getStore("user"))
-  if (userParams !== null) {
-    params.username = userParams.username
-    params.password = userParams.password
-  }
-  // console.log(userParams)
-  loginCheckWithoutCode(params.username, params.password).then(res => {
-    console.log(res)
-    if (!JSON.parse(res.status)) { // 没登录
-      if (whiteList.indexOf(to.path) !== -1) { // 白名单
-        next()
-      } else {
-        next('/login')
-      }
+
+router.beforeEach((to, from, next) => {
+    // var userName = store.state.user.userName;
+    var _userName = sessionStorage.getItem('user') !== null ?
+        JSON.parse(sessionStorage.getItem('user')).userName :
+       '未登录';
+    // console.log(_userName);
+    if (_userName === '未登录') {
+        if (to.path === '/login' || to.path === '/register') {
+            next();
+            sessionStorage .removeItem('user');
+            store.state.user = {
+                userName: '未登录',
+                userface: '',
+                realName: '',
+                role: '',
+            };
+            return;
+        } else {
+            next({path: '/login'});
+        }
     } else {
-      store.commit('RECORD_USERINFO', {info: res.result})
-      if (to.path === '/login') { //  跳转到
-        next({path: '/'})
-      }
-      next()
+
+        if (to.path === '/') {
+            next({path: '/project'});
+        }
+            next();
     }
-  })
 })
-/* eslint-disable no-new */
+
+//router.afterEach(transition => {
+//NProgress.done();
+//});
+
 new Vue({
-  el: '#app',
-  store,
-  router,
-  render: h => h(App)
-})
+    //el: '#app',
+    //template: '<App/>',
+    router,
+    store,
+    //components: { App }
+    render: h => h(App)
+}).$mount('#app')
+

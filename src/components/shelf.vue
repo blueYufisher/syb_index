@@ -19,7 +19,34 @@
     ]
   }
 </script>
-<style lang="scss" rel="stylesheet/scss" scoped>
+<style scoped lang="scss" type="text/scss">
+  /*.gray-box {
+    position: relative;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    border-color: rgba(0, 0, 0, .14);
+    box-shadow: 0 3px 8px -6px rgba(0, 0, 0, .1);
+    .title {
+      color: #333;
+      background-color: #f5f5f5;
+      border-color: #ddd;
+      padding: 10px 15px;
+      border-bottom: 1px solid transparent;
+      border-top-right-radius: 3px;
+      border-top-left-radius: 3px;
+      h2 {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: inherit;
+      }
+    }
+  }*/
   .gray-box {
     position: relative;
     margin-bottom: 30px;

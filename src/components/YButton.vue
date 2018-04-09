@@ -29,7 +29,7 @@
     }
   }
 </script>
-<style lang="scss" rel="stylesheet/scss" scoped>
+<style scoped lang="scss" type="text/scss">
   @import "../assets/style/theme";
 
   %style {
