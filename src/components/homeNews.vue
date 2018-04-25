@@ -5,7 +5,7 @@
         <div></div>
       </div>
       <router-link :to="url_one[index-1]" class="news_more">更多</router-link>
-      <h3 v-cloak>{{infos_first_title}}</h3>
+      <h3 v-cloak>{{infos_first_title[index-1]}}</h3>
       <ul v-for="(info, i) in infos_first">
         <li><span>{{info.releaseTime}}</span>
           <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}">
@@ -19,7 +19,7 @@
         <div></div>
       </div>
       <router-link :to="url_two[index-1]" class="news_more">更多</router-link >
-      <h3 v-cloak>{{infos_second_title}}</h3>
+      <h3 v-cloak>{{infos_second_title[index-1]}}</h3>
       <ul v-for="(info, i) in infos_second">
         <li><span>{{info.releaseTime}}</span>
           <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}">
@@ -42,11 +42,11 @@
     data () {
       return {
         infos_first: [],
-        infos_first_title: '',
+        infos_first_title: ['栏目新闻', '创业政策', '创业导师', '协同创新平台'],
         infos_second: [],
-        infos_second_title: '',
+        infos_second_title: ['创业沙龙', '创业知识', '创业校友', '创业培训'],
         url_one: ['/base?url=news', '/service?url=policy', '/tutor', '/service?url=bases'],
-        url_two: ['/base?url=activity', '/base?url=knowledge', '/service?url=teacher', '/service?url=funds']
+        url_two: ['/base?url=activity', '/base?url=knowledge', '/service?url=teacher', '/service?url=train']
       }
     },
     methods: {
@@ -57,12 +57,12 @@
         let _this = this
         selectInfoByNumAndType(5, one).then(res => {
           _this.infos_first = _this.renderData(res.data.resultList)
-          _this.infos_first_title = _this.infos_first[0].typeTitle
+          // _this.infos_first_title = _this.infos_first[0].typeTitle
           // console.log(_this.infos_first)
         })
         selectInfoByNumAndType(5, two).then(res => {
           _this.infos_second = _this.renderData(res.data.resultList)
-          _this.infos_second_title = _this.infos_second[0].typeTitle
+          // _this.infos_second_title = _this.infos_second[0].typeTitle
           // console.log(_this.infos_second)
         })
       },
@@ -70,6 +70,9 @@
         let data = resultList
         data.forEach((item, index) => {
           item.releaseTime = formatDate(item.releaseTime, 'yyyy-MM-dd')
+          if (!item.typeList[0].isParent) {
+            item.title = item.typeList[0].typeTitle + '  |  ' + item.title
+          }
         })
         return data
       }
@@ -88,7 +91,7 @@
           _this.getData(6, 5)
           break
         case 4:
-          _this.getData(14, 9)
+          _this.getData(14, 7)
           break
       }
     },
@@ -107,8 +110,8 @@
 
   .home_news {
     width: 600px;
-    height: 180px;
-    padding: 15px 0;
+    /*height: 180px;*/
+    /*padding: 15px 0;*/
   }
 
   .fr {

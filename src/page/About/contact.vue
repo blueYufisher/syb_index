@@ -10,83 +10,63 @@
       </ul>
     </div>
     <!--  bread_crumbs 结束  -->
-    <div v-loading="loading" element-loading-text="加载中...">
+    <div>
       <section class="w mt30 clearfix">
         <div class="contentwrap">
           <div class="content">
             <div class="area havemenu">
-              <div class="pagetitle"><span>联系我们</span></div>
-              <div class="article-toolbar">
-                <span class="article-assist">
-                    <!--<span class="origin">来源:</span>-->
-                    <span class="author">发布时间：</span><span class="time">2017-09-01</span>
-                </span>
-                <span class="article-statist">
-                    <!--<span class="article-view">浏览量：<em id="m2oclicks" data-id="724"-->
-                  <!--data-app="news" data-mod="news" data-column="78">921</em>-->
-                  <!--</span>-->
-                </span>
-              </div>
-              <div class="contentbox" style="border-top:1px solid #e3e3e3">
-                <div class="article-main">
-                  <table style="border-collapse:collapse;width:554px;margin-left:150px">
-                    <tbody>
-                    <tr>
-                      <td width="138" valign="top" style="width:138px;padding:10px 0 10px 15px "><p
-                        style="margin-top:5px;line-height: 200%;"><span
-                        style=";font-family: 宋体;letter-spacing: 0;font-size: 13px;background: rgb(255, 255, 255)">办公地址：</span>
-                      </p></td>
-                      <td width="415" valign="top" style="width:416px;padding:10px 0 10px 15px "><p
-                        style="margin-top:5px"><span
-                        style="font-family: 宋体;letter-spacing: 0;font-size: 13px;background: rgb(255, 255, 255)">大学城外环西路100号广东工业大学教学6号楼209-2</span>
-                      </p></td>
-                    </tr>
-                    <tr>
-                      <td width="138" valign="top" style="width:138px;padding:10px 0 10px 15px "><p
-                        style="margin-top:5px;line-height:18px"><span
-                        style="font-family: 宋体;letter-spacing: 0;font-size: 13px;background: rgb(255, 255, 255)">邮政编码：</span>
-                      </p></td>
-                      <td width="415" valign="top" style="width:416px;padding:10px 0 10px 15px "><p
-                        style="margin-top:5px;line-height:18px"><span
-                        style="font-family: 宋体;letter-spacing: 0;font-size: 13px;background: rgb(255, 255, 255)">510006</span>
-                      </p></td>
-                    </tr>
-                    <tr>
-                      <td width="138" valign="top" style="width:138px;padding:10px 0 10px 15px "><p
-                        style="margin-top:5px;line-height:18px"><span
-                        style="font-family: 宋体;letter-spacing: 0;font-size: 13px;background: rgb(255, 255, 255)">办公时间：</span>
-                      </p></td>
-                      <td width="415" valign="top" style="width:416px;padding:10px 0 10px 15px "><p
-                        style="margin-top:5px;line-height:18px"><span
-                        style="font-family: 宋体;letter-spacing: 0;font-size: 13px;background: rgb(255, 255, 255)">周一至周五上午9：00--下午5：00（国定节假日除外）</span>
-                      </p></td>
-                    </tr>
-                    <tr>
-                      <td width="138" valign="top" style="width:138px;padding:10px 0 10px 15px "><p
-                        style="margin-top:5px;line-height:18px"><span
-                        style="font-family: 宋体;letter-spacing: 0;font-size: 13px;background: rgb(255, 255, 255)">联系电话：</span>
-                      </p></td>
-                      <td width="415" valign="top" style="width:416px;padding:10px 0 10px 15px "><p
-                        style="margin-top:5px;line-height:18px"><span
-                        style="font-family: 宋体;letter-spacing: 0;font-size: 13px;background: rgb(255, 255, 255)">020-39322612</span>
-                      </p></td>
-                    </tr>
-                    <tr>
-                      <td width="554" valign="top" colspan="2" style="width:554px;padding:10px 0 10px 15px "><p
-                        style="margin-top:5px;text-align:center;line-height:18px"><span
-                        style="font-family:#39;color:rgb(134,134,134);font-size:16px"></span></p>
-                        <p style="text-align: center;"><img class="image" imageid="1343"
-                                                            src="../../assets/images/map.png"
-                                                            style="float: none;"></p>
-                        <p style="margin-top:5px;text-align:center;line-height:18px"><span
-                          style="font-family:#39;color:rgb(134,134,134);font-size:16px"></span><br></p>
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
-                  <p><br></p></div>
-              </div>
+              <div class="pagetitle"><span>关于创业梦工场</span></div>
             </div>
+            <div class="jiaruyineng">
+              <ul class="clearfix">
+                <li @click="changePage(1)" :class="{cur:choosePage===1}">
+                  <router-link to="/contact/aboutBase">
+                    <p class="iconbox">
+                      <img class="img1" src="../../assets/images/icons8-skyscrapers-55.png">
+                      <img class="img2" src="../../assets/images/icons8-skyscrapers-55-hover.png">
+                    </p>
+                    <p class="text">基地概况</p>
+                  </router-link>
+                </li>
+                <!--<li @click="changePage(2)" :class="{cur:choosePage===2}">-->
+                  <!--<router-link to="/contact/brandStory">-->
+                    <!--<p class="iconbox">-->
+                      <!--<img class="img1" src="../../assets/images/pinpaigushi.png">-->
+                      <!--<img class="img2" src="../../assets/images/pinpaigushiho.png">-->
+                    <!--</p>-->
+                    <!--<p class="text">品牌故事</p>-->
+                  <!--</router-link>-->
+                <!--</li>-->
+                <!--<li @click="changePage(3)" :class="{cur:choosePage===3}">-->
+                <!--<a href="/AboutUs/Culture/index.html">-->
+                <!--<p class="iconbox">-->
+                <!--<img class="img1" src="../../assets/images/qiyewenhua.png">-->
+                <!--<img class="img2" src="../../assets/images/qiyewenhuaho.png">-->
+                <!--</p>-->
+                <!--<p class="text">企业文化</p>-->
+                <!--</a>-->
+                <!--</li>-->
+                <li @click="changePage(4)" :class="{cur:choosePage===4}">
+                  <router-link to="/contact/baseHonor">
+                    <p class="iconbox">
+                      <img class="img1" src="../../assets/images/icons8-prize.png">
+                      <img class="img2" src="../../assets/images/icons8-prize-hover.png">
+                    </p>
+                    <p class="text">资质荣誉</p>
+                  </router-link>
+                </li>
+                <li @click="changePage(5)" :class="{cur:choosePage===5}">
+                  <router-link to="/contact/contactUs">
+                    <p class="iconbox">
+                      <img class="img1" src="../../assets/images/icons8-phone.png">
+                      <img class="img2" src="../../assets/images/icons8-phone-hover.png">
+                    </p>
+                    <p class="text">联系我们</p>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+            <router-view></router-view>
           </div>
         </div>
       </section>
@@ -96,68 +76,36 @@
 <script>
   /*eslint-disable */
   import {setStore, getStore} from '/utils/storage.js'
+  import BMap from '/components/map'
 
   export default {
+    components: {
+      BMap
+    },
     data() {
       return {
-        banner: {},
-        bgOpt: {
-          px: 0,
-          py: 0,
-          w: 0,
-          h: 0
-        },
-        projects: [],
-        infos: [1, 2, 3],
-        floors: [],
-        hot: [],
-        loading: false,
-        notify: '1',
-        dialogVisible: false
+        choosePage: 1,
       }
     },
     methods: {
-      bgOver(e) {
-        this.bgOpt.px = e.offsetLeft
-        this.bgOpt.py = e.offsetTop
-        this.bgOpt.w = e.offsetWidth
-        this.bgOpt.h = e.offsetHeight
+      changePage(v) {
+        this.choosePage = v
       },
-      bgMove(dom, eve) {
-        let bgOpt = this.bgOpt
-        let X, Y
-        let mouseX = eve.pageX - bgOpt.px
-        let mouseY = eve.pageY - bgOpt.py
-        if (mouseX > bgOpt.w / 2) {
-          X = mouseX - (bgOpt.w / 2)
-        } else {
-          X = mouseX - (bgOpt.w / 2)
-        }
-        if (mouseY > bgOpt.h / 2) {
-          Y = bgOpt.h / 2 - mouseY
-        } else {
-          Y = bgOpt.h / 2 - mouseY
-        }
-        dom.style['-webkit-transform'] = `rotateY(${X / 50}deg) rotateX(${Y / 50}deg)`
-        dom.style.transform = `rotateY(${X / 50}deg) rotateX(${Y / 50}deg)`
-      },
-      bgOut(dom) {
-        dom.style['-webkit-transform'] = 'rotateY(0deg) rotateX(0deg)'
-        dom.style.transform = 'rotateY(0deg) rotateX(0deg)'
-      },
-      showNotify() {
-        var value = getStore('notify')
-        if (this.notify !== value) {
-          this.dialogVisible = true
-          setStore('notify', this.notify)
+      getPage() {
+        let url = this.$route.fullPath.split('?')[0]
+        // console.log(url)
+        if (this.$route.path === '/contact/aboutBase') {
+          this.changePage(1)
+        } else if (this.$route.path === '/contact/baseHonor') {
+          this.changePage(4)
+        } else if (this.$route.path === '/contact/contactUs') {
+          this.changePage(5)
         }
       }
     },
     mounted() {
-      this.loading = false
-      this.showNotify()
-    },
-    components: {}
+      this.getPage()
+    }
   }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -229,9 +177,10 @@
           line-height: 35px;
           text-align: center;
           span {
-            font-size: 25px;
-            font-weight: 700;
-            color: #333;
+            display: block;
+            color: #eb6100;
+            font-size: 24px;
+            font-weight: bold;
           }
         }
         .article-toolbar {
@@ -283,28 +232,89 @@
             width: 185px;
           }
         }
-        /*.homeCenterNavImg01 {*/
-          /*background: url(/static/images/home_nav_img01.png) no-repeat scroll 0 0 transparent;*/
-          /*height: 112px;*/
-          /*border-left: 1px solid #ccc;*/
-          /*!*padding: 15px 0 0 110px;*!*/
-          /*!*width: 406px;*!*/
-        /*}*/
-        /*.homeCenterNavImg02 {*/
-          /*background: url(/static/images/home_nav_img02.png) no-repeat scroll 0 0 transparent;*/
-          /*height: 112px;*/
-          /*border-left: 1px solid #ccc;*/
-          /*!*padding: 15px 0 0 110px;*!*/
-          /*!*width: 406px;*!*/
-        /*}*/
-        /*.homeCenterNavImg03 {*/
-          /*background: url(/static/images/home_nav_img03.png) no-repeat scroll 0 0 transparent;*/
-          /*height: 112px;*/
-          /*border-right: 1px solid #ccc;*/
-          /*!*padding: 15px 0 0 110px;*!*/
-          /*!*width: 406px;*!*/
-        /*}*/
+
       }
+    }
+  }
+
+  .jiaruyineng {
+    background: url(../../assets/images/jryn2.png) repeat-x center center;
+    width: 100%;
+    height: 115px;
+    overflow: hidden;
+    ul {
+      padding-top: 25px;
+      text-align: center;
+      ::before, ::after {
+        content: " ";
+        display: table;
+      }
+      li {
+        text-align: center;
+        /*width: 55px;*/
+        width: 10%;
+        margin: 0 36px;
+        display: inline-block;
+        padding: 0 10px;
+        background-color: #fff;
+        vertical-align: middle;
+        a {
+          text-decoration: none;
+          color: #1a1a1a;
+          .iconbox {
+            display: block;
+            height: 55px;
+            margin-bottom: 14px;
+            img {
+              display: block;
+              width: 55px;
+              height: 55px;
+              margin: 0 auto;
+              border: 1px #ccc solid;
+              border-radius: 50%;
+            }
+          }
+          .text {
+            margin: 0 auto;
+            width: 65px;
+            text-align: center;
+            /*margin-right: 0;*/
+            font-size: 16px;
+            color: #666;
+            height: 21px;
+            overflow: hidden;
+            /*margin-left: -5px;*/
+          }
+        }
+        :hover {
+          .img1 {
+            display: none;
+          }
+          .img2 {
+            display: block;
+          }
+          .text {
+            color: #eb6100;
+          }
+        }
+      }
+      .cur {
+        .img1 {
+          display: none;
+            margin: 0 auto;
+        }
+        .img2 {
+          display: block;
+          margin: 0 auto;
+        }
+        .text {
+          color: #eb6100;
+          margin: 0 auto;
+        }
+      }
+    }
+    .img2:not(.cur) {
+      display: none;
     }
   }
 

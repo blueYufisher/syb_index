@@ -1,26 +1,55 @@
 <template>
   <!-- 制作一个框架包裹slider -->
-  <div style="width:100%;height:400px">
-    <!-- 配置slider组件 -->
-    <slider :pages="pages" :sliderinit="sliderinit">
-      <!-- 设置loading,可自定义 -->
-      <div slot="loading">loading...</div>
-    </slider>
+  <div class="inner">
+    <div class="moduleOne">
+      <!-- 配置slider组件 -->
+      <slider :pages="pages" :sliderinit="sliderinit">
+        <!-- 设置loading,可自定义 -->
+        <div slot="loading">loading...</div>
+      </slider>
+    </div>
+    <div class="moduleTwo">
+      <div class="newest-info clr" id="newest-info">
+        <div class="small">
+          <ul v-for="(info, i) in infos">
+            <li>
+              <div class="pic">
+                <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}">
+                <a target="_blank" title="">
+                  <img
+                    v-lazy="info.picList[0].picUrl"
+                    width="377" height="223" alt="">
+                </a>
+                </router-link>
+              </div>
+              <div class="txt">
+                <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}">
+                <a target="_blank" title="">{{info.title}}</a>
+                </router-link>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 <script>
   /*eslint-disable */
   import slider from 'vue-concise-slider'// import slider components
-  var slider1 = require('../assets/images/1_0951409571.jpg')
+  var slider1 = require('../assets/images/2018.png')
   var slider2 = require('../assets/images/1_1616412971.jpg')
   var slider3 = require('../assets/images/1_1616412753.jpg')
   var slider4 = require('../assets/images/1_1616418145.png')
   var slider5 = require('../assets/images/1_1618571012.png')
+  import {selectInfoNumByReleaseTime} from '/api/index.js'
   export default {
-    data () {
+    data() {
       return {
         //Image list
-        pages:[
+        serverUrl: process.env.API_ROOT,  // 打包部署上线时
+        pages: [
           {
             html: '<div class="slider1"></div>',
             style: {
@@ -57,33 +86,120 @@
           currentPage: 0,
           thresholdDistance: 500,
           thresholdTime: 500,
-          autoplay:3000,
-          loop:true,
+          autoplay: 3000,
+          loop: true,
           // direction:'vertical',
-          infinite:1,
-          slidesToScroll:1,
+          infinite: 1,
+          slidesToScroll: 1,
           timingFunction: 'ease',
           duration: 1000
-        }
+        },
+        infos:[]
       }
     },
     components: {
       slider
     },
     methods: {
-      // // Listener event
-      // slide (data) {
-      //   console.log(data)
-      // },
-      // onTap (data) {
-      //   console.log(data)
-      // },
-      // onInit (data) {
-      //   console.log(data)
-      // }
+      getData(){
+        let _this = this;
+        selectInfoNumByReleaseTime(4).then(res => {
+          let data = res.data
+          data.forEach((item, index) => {
+            if (item.picList) {
+              item.picList[0].picUrl = this.serverUrl + "\\images\\" + item.picList[0].picUrl;
+            }
+          })
+          _this.infos = data;
+        })
+      }
+    },
+    mounted(){
+     this.getData();
     }
   }
 </script>
 <style scoped lang="scss" type="text/scss">
+  .inner {
+    width: 100%;
+    height:450px;
+    margin: 0 auto;
+    position: relative;
+    .moduleOne {
+      float: left;
+      width: 60%;
+      height: 450px;
+      border-bottom: 2px solid #fff;
+    }
+    .moduleTwo {
+      overflow: hidden;
+      .small{
+        overflow: hidden;
+        ul{
+          li{
+            width: 50%;
+            float: left;
+            border-left: 2px solid #fff;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 2px solid #fff;
+            .pic {
+              a {
+                position: relative;
+                display: block;
+                img{
+                  transition: all ease-in-out 0.3s;
+                  -moz-transition: all ease-in-out 0.3s;
+                  -webkit-transition: all ease-in-out 0.3s;
+                  display: block;
+                }
+              }
+            }
+            .txt{
+              position: absolute;
+              left: 0;
+              bottom: 0;
+              z-index: 1;
+              height: 40px;
+              line-height: 42px;
+              padding: 0 20px;
+              width: 377px;
+              background-image: -webkit-linear-gradient(180deg, rgba(0,0,0,0.01) 5%, rgba(0,0,0,0.4) 100%);
+              background-image: -moz-linear-gradient(180deg, rgba(0,0,0,0.01) 5%, rgba(0,0,0,0.4) 100%);
+              background-image: linear-gradient(180deg, rgba(0,0,0,0.01) 5%, rgba(0,0,0,0.4) 100%);
+              -webkit-transition: all 0s ease-out;
+              -moz-transition: all 0s ease;
+              transition: all 0s ease;
+              a{
+                color: #fff;
+                font-size: 14px;
+                display: block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
+  .small li .pic a:hover:before {
+    content: "";
+    background: rgba(0, 0, 0, 0);
+  }
+
+  .small li .pic a:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -webkit-transition: all ease-in-out 0.3s;
+  }
 </style>

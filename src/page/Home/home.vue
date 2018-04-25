@@ -29,7 +29,7 @@
 </template>
 <script>
   /*eslint-disable */
-  import {selectProjectsByNum} from '/api/index.js'
+  import {findProjectNumByVisit} from '/api/index.js'
   import ImageShow from '/components/imageShow'
   import homeNews from '/components/homeNews'
   import homeServer from '/components/homeServer'
@@ -92,12 +92,12 @@
       // }
     },
     mounted () {
-      selectProjectsByNum(10).then(res => {
+      findProjectNumByVisit(10).then(res => {
         // console.log(res)
         let data = res.data
         data.forEach((item, index) => {
-          if (item.picUrl) {
-            item.picUrl = this.serverUrl + "\\images\\" + item.picUrl;
+          if (item.picList) {
+            item.picList[0].picUrl = this.serverUrl + "\\images\\" + item.picList[0].picUrl;
           }
         })
         this.projects = data

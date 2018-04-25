@@ -26,13 +26,13 @@
                       <span>团队入驻</span>
                     </router-link>
                   </li>
-                  <li class="ll" @click="changePage(11)" :class="{active:choosePage===11}">
+                  <li class="ll" @click="changePage(12)" :class="{active:choosePage===12}">
                     <router-link to="/guide?url=assess">
                       <div></div>
                       <span>工商财税</span>
                     </router-link>
                   </li>
-                  <li class="ll" @click="changePage(12)" :class="{active:choosePage===12}">
+                  <li class="ll" @click="changePage(11)" :class="{active:choosePage===11}">
                     <router-link to="/guide?url=manage">
                       <div></div>
                       <span>团队管理</span>
@@ -110,8 +110,8 @@
       classObject: function () {
         return {
           enter: this.classValue === 10,
-          assess: this.classValue === 11,
-          manage: this.classValue === 12,
+          assess: this.classValue === 12,
+          manage: this.classValue === 11,
           hatch: this.classValue === 13
         }
       }
@@ -135,12 +135,12 @@
 
           case "/guide?url=assess":
             _this.crumbs_active = "工商财税"
-            _this.getData(11, page, pageSize)
+            _this.getData(12, page, pageSize)
             break;
 
           case "/guide?url=manage":
             _this.crumbs_active = "团队管理"
-            _this.getData(12, page, pageSize)
+            _this.getData(11, page, pageSize)
             break;
 
             case "/guide?url=hatch":
@@ -278,6 +278,10 @@
 
   #lmenu {
     width: 80%
+  }
+
+  .tmo_list2 li span{
+    display: block;
   }
 
   .tmo_list2 {

@@ -367,7 +367,7 @@
   }
 
   .articleUl {
-    margin-bottom: 15px;
+    margin: 15px 0;
   }
 
   .articleUl li {
@@ -421,7 +421,7 @@
     border-top: 1px dotted #ececec;
     border-bottom: 1px dotted #ececec;
     height: 22px;
-    padding: 5px 0;
+    /*padding: 5px 0;*/
     color: #999;
     text-align: center;
   }

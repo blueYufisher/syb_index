@@ -2,7 +2,7 @@
   <div class="home_project">
     <div class="good-img">
       <router-link :to="{path:'/projectDetail', query:{id: msg.id}}">
-        <img v-lazy="msg.picUrl" :alt="msg.projName">
+        <img v-lazy="msg.picList[0].picUrl" :alt="msg.projName">
       </router-link>
     </div>
     <h6 class="good-title" v-html="msg.projName">{{msg.projName}}</h6>
@@ -72,7 +72,9 @@
   /*}*/
   .home_project {
     background: #fff;
-    width: 20%;
+    width: 19%;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
     transition: all .5s;
     height: 180px;
     &:hover {

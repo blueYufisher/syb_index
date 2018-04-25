@@ -21,6 +21,9 @@ export const logout = () => {
 export const selectInfoByNumAndType = (num, type) => {
   return http.fetchGet(serverUrl + '/selectInfoByNumAndType?num=' + num + '&type=' + type)
 }
+export const selectInfoNumByReleaseTime = (num) => {
+  return http.fetchGet(serverUrl + '/selectInfoNumByReleaseTime?num=' + num)
+}
 export const selectInfoByIdAndType = (params) => {
   // return http.fetchGet(serverUrl + '/selectInfoByIdAndType?id=' + id + '&type=' + type)
   return http.fetchPost(serverUrl + '/selectInfoByIdAndType', params)

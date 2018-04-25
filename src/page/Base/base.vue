@@ -22,19 +22,19 @@
                   <li class="ll first"><span>社区资讯</span></li>
                   <li class="ll" @click="changePage(1)" :class="{active:choosePage===1}">
                     <router-link to="/base?url=activity">
-                      <div></div>
+                      <!--<div></div>-->
                       <span>创业沙龙</span>
                     </router-link>
                   </li>
                   <li class="ll" @click="changePage(2)" :class="{active:choosePage===2}">
                     <router-link to="/base?url=news">
-                      <div></div>
+                      <!--<div></div>-->
                       <span>通知新闻</span>
                     </router-link>
                   </li>
                   <li class="ll" @click="changePage(3)" :class="{active:choosePage===3}">
                     <router-link to="/base?url=knowledge">
-                      <div></div>
+                      <!--<div></div>-->
                       <span>创业知识</span>
                     </router-link>
                   </li>
@@ -268,6 +268,13 @@
     width: 80%
   }
 
+  #lemnu a{
+    /*display: block;*/
+  }
+
+  .tmo_list2 li span{
+    display: block;
+  }
   .tmo_list2 {
     li {
       height: 50px;
@@ -283,12 +290,14 @@
           font-weight: bold;
           color: white;
           margin-left: 10px;
+          display:block;
         }
         &.span {
           font-size: 17px;
           font-weight: bold;
           color: white;
-          margin-left: 10px
+          margin-left: 10px;
+          display:block;
         }
       }
       span {

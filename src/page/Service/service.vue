@@ -291,6 +291,9 @@
   #lmenu {
     width: 80%
   }
+  .tmo_list2 li span{
+    display: block;
+  }
 
   .tmo_list2 {
     li {

@@ -11,7 +11,7 @@
           <div class="right-box">
             <div class="nav-list" v-if="searchIf">
               <el-autocomplete
-                placeholder="请输入文字搜索"
+                :placeholder="placeholder"
                 icon="search"
                 v-model="input"
                 minlength=1
@@ -30,7 +30,7 @@
             </div>
             <div class="nav-aside" ref="aside" :class="{fixed:st}">
               <div class="user pr">
-                  <a href="http://job.gdut.edu.cn/syb/admin/index.html#/login" target=_blank>个人中心</a>
+                <a href="http://job.gdut.edu.cn/syb/admin/index.html#/login" target=_blank>个人中心</a>
                 <!--用户信息显示-->
                 <div class="nav-user-wrapper pa" v-if="login">
                   <div class="nav-user-list">
@@ -38,7 +38,7 @@
                       <!--头像-->
                       <li class="nav-user-avatar">
                         <div>
-                          <span class="avatar" >
+                          <span class="avatar">
                             <img :src="this.sysUserAvatar"/>
                           </span>
                         </div>
@@ -68,46 +68,74 @@
                   <router-link to="/"><a @click="changePage(1)" :class="{active:choosePage===1}">网站首页</a></router-link>
                 </li>
                 <li class="p_menu">
-                  <router-link to="/about"><a @click="changePage(2)" :class="{active:choosePage===2}">关于社区</a></router-link>
+                  <router-link to="/about"><a @click="changePage(2)" :class="{active:choosePage===2}">关于社区</a>
+                  </router-link>
                 </li>
                 <li class="p_menu" @mouseover="bgOver($refs.nav)" @mouseout="bgOut($refs.nav)">
                   <a :class="{active:choosePage===3}" ref="nav">社区资讯</a>
                   <ul class="smenu" :class="{disappear:hoverNav!=='社区资讯'}">
-                    <li @click="changePage(3)"><router-link to="/base?url=activity">创业沙龙</router-link></li>
-                    <li @click="changePage(3)"><router-link to="/base?url=news">新闻通知</router-link></li>
-                    <li @click="changePage(3)"><router-link to="/base?url=knowledge">创业知识</router-link></li>
+                    <li @click="changePage(3)">
+                      <router-link to="/base?url=activity">创业沙龙</router-link>
+                    </li>
+                    <li @click="changePage(3)">
+                      <router-link to="/base?url=news">新闻通知</router-link>
+                    </li>
+                    <li @click="changePage(3)">
+                      <router-link to="/base?url=knowledge">创业知识</router-link>
+                    </li>
                   </ul>
                   <!--<router-link to="/thanks"><a @click="changePage(3)" :class="{active:choosePage===3}">社区资讯</a></router-link>-->
                 </li>
                 <li class="p_menu">
-                  <router-link to="/project"><a @click="changePage(4)" :class="{active:choosePage===4}">团队风采</a></router-link>
+                  <router-link to="/project"><a @click="changePage(4)" :class="{active:choosePage===4}">团队风采</a>
+                  </router-link>
                 </li>
                 <li class="p_menu">
-                  <router-link to="/tutor"><a @click="changePage(5)" :class="{active:choosePage===5}">创业导师</a></router-link>
+                  <router-link to="/tutor"><a @click="changePage(5)" :class="{active:choosePage===5}">创业导师</a>
+                  </router-link>
                 </li>
-                <li class="p_menu"  @mouseover="bgOver($refs.nav1)" @mouseout="bgOut($refs.nav1)">
+                <li class="p_menu" @mouseover="bgOver($refs.nav1)" @mouseout="bgOut($refs.nav1)">
                   <a :class="{active:choosePage===6}" ref="nav1">创业服务</a>
                   <ul class="smenu" :class="{disappear:hoverNav!=='创业服务'}">
-                    <li @click="changePage(6)"><router-link to="/service?url=teacher">创业校友</router-link></li>
-                    <li @click="changePage(6)"><router-link to="/service?url=train">创业培训</router-link></li>
-                    <li @click="changePage(6)"><router-link to="/service?url=policy">创业政策</router-link></li>
-                    <li @click="changePage(6)"><router-link to="/service?url=funds">创业基金</router-link></li>
-                    <li @click="changePage(6)"><router-link to="/service?url=bases">合作基地</router-link></li>
+                    <li @click="changePage(6)">
+                      <router-link to="/service?url=teacher">创业校友</router-link>
+                    </li>
+                    <li @click="changePage(6)">
+                      <router-link to="/service?url=train">创业培训</router-link>
+                    </li>
+                    <li @click="changePage(6)">
+                      <router-link to="/service?url=policy">创业政策</router-link>
+                    </li>
+                    <li @click="changePage(6)">
+                      <router-link to="/service?url=funds">创业基金</router-link>
+                    </li>
+                    <li @click="changePage(6)">
+                      <router-link to="/service?url=bases">合作基地</router-link>
+                    </li>
                   </ul>
                   <!--<router-link to="/thanks"><a @click="changePage(3)" :class="{active:choosePage===3}">创业服务</a></router-link>-->
                 </li>
-                <li class="p_menu"  @mouseover="bgOver($refs.nav2)" @mouseout="bgOut($refs.nav2)">
+                <li class="p_menu" @mouseover="bgOver($refs.nav2)" @mouseout="bgOut($refs.nav2)">
                   <a :class="{active:choosePage===7}" ref="nav2">服务指南</a>
                   <ul class="smenu" :class="{disappear:hoverNav!=='服务指南'}">
-                    <li @click="changePage(7)"><router-link to="/guide?url=enter">团队入驻</router-link></li>
-                    <li @click="changePage(7)"><router-link to="/guide?url=assess">工商财税</router-link></li>
-                    <li @click="changePage(7)"><router-link to="/guide?url=manage">团队管理</router-link></li>
-                    <li @click="changePage(7)"><router-link to="/guide?url=hatch">出孵追踪</router-link></li>
+                    <li @click="changePage(7)">
+                      <router-link to="/guide?url=enter">团队入驻</router-link>
+                    </li>
+                    <li @click="changePage(7)">
+                      <router-link to="/guide?url=assess">工商财税</router-link>
+                    </li>
+                    <li @click="changePage(7)">
+                      <router-link to="/guide?url=manage">团队管理</router-link>
+                    </li>
+                    <li @click="changePage(7)">
+                      <router-link to="/guide?url=hatch">出孵追踪</router-link>
+                    </li>
                   </ul>
                   <!--<router-link to="/thanks"><a @click="changePage(3)" :class="{active:choosePage===3}">服务指南</a></router-link>-->
                 </li>
                 <li class="p_menu">
-                  <router-link to="/contact"><a @click="changePage(8)" :class="{active:choosePage===8}">联系我们</a></router-link>
+                  <router-link to="/contact/aboutBase"><a @click="changePage(8)"
+                                                          :class="{active:choosePage===8}">联系我们</a></router-link>
                 </li>
               </ul>
               <div></div>
@@ -153,7 +181,8 @@
         searchIf: false,
         url_num: '',
         sysUserName: '',
-        sysUserAvatar: ''
+        sysUserAvatar: '',
+        placeholder: ''
       }
     },
     computed: {
@@ -212,12 +241,12 @@
       loadAll() {
         let _this = this
         return new Promise((resolve, reject) => {
-          switch (this.url_num){
+          switch (this.url_num) {
             case "/base":
               setStore("ints", [1, 2, 3])
               setStore("info_proj", 1)
               _this.postInfoData(1, 10, [1, 2, 3]).then(array => {
-                console.log("array:", array)
+                // console.log("array:", array)
                 // _this.searchResults = array
                 resolve(array)
               }).catch(() => {
@@ -228,7 +257,7 @@
             case "/project":
               setStore("info_proj", 2)
               _this.postProjData(1, 10).then(array => {
-                console.log("array:", array)
+                // console.log("array:", array)
                 // _this.searchResults = array
                 resolve(array)
               }).catch(() => {
@@ -240,7 +269,7 @@
               setStore("ints", [6])
               setStore("info_proj", 1)
               _this.postInfoData(1, 10, [6]).then(array => {
-                console.log("array:", array)
+                // console.log("array:", array)
                 // _this.searchResults = array
                 resolve(array)
               }).catch(() => {
@@ -252,7 +281,7 @@
               setStore("ints", [5, 7, 8, 9, 14])
               setStore("info_proj", 1)
               _this.postInfoData(1, 10, [5, 7, 8, 9, 14]).then(array => {
-                console.log("array:", array)
+                // console.log("array:", array)
                 // _this.searchResults = array
                 resolve(array)
               }).catch(() => {
@@ -264,7 +293,7 @@
               setStore("ints", [10, 11, 12, 13])
               setStore("info_proj", 1)
               _this.postInfoData(1, 10, [10, 11, 12, 13]).then(array => {
-                console.log("array:", array)
+                // console.log("array:", array)
                 // _this.searchResults = array
                 resolve(array)
               }).catch(() => {
@@ -274,8 +303,8 @@
           }
         })
       },
-      postInfoData(currentPage, pageSize, ints){
-        let postInfoObj ={
+      postInfoData(currentPage, pageSize, ints) {
+        let postInfoObj = {
           currentPage: currentPage,
           pageSize: pageSize,
           ints: ints,
@@ -304,7 +333,7 @@
           })
         })
       },
-      postProjData(currentPage, pageSize){
+      postProjData(currentPage, pageSize) {
         let postProjObj = {
           projName: this.input,
           companyName: this.input
@@ -400,22 +429,28 @@
       // 通过路由改变导航文字样式
       getPage() {
         let url = this.$route.fullPath.split('?')[0]
-        console.log(url)
+        // console.log(url)
         if (this.$route.path === '/' || this.$route.path === '/home') {
           this.changePage(1)
         } else if (this.$route.path === '/about') {
           this.changePage(2)
         } else if (url === '/base') {
+          this.placeholder = "请输入文字搜索社区咨询";
           this.changePage(3)
         } else if (this.$route.path === '/project') {
+          this.placeholder = "请输入文字搜索团队";
           this.changePage(4)
-        } else if (this.$route.path === '/alumni') {
+        } else if (this.$route.path === '/tutor') {
+          this.placeholder = "请输入文字搜索创业导师";
           this.changePage(5)
-        } else if (url === '/server') {
+        } else if (url === '/service') {
+          this.placeholder = "请输入文字搜索创业服务";
           this.changePage(6)
         } else if (url === '/guide') {
+          this.placeholder = "请输入文字搜索服务指南";
           this.changePage(7)
-        } else if (this.$route.path === '/contact'){
+        } else if (this.$route.path === '/contact/aboutBase' ||
+          this.$route.path === '/contact/baseHonor' || this.$route.path === '/contact/contactUs') {
           this.changePage(8)
         } else {
           this.changePage(-1)
@@ -427,11 +462,14 @@
         let _this = this
         this.input = ''
         this.url_num = to.path
-        if (to.path === '/home' || to.path === '/detail' || to.path === '/about' || to.path === '/contact' || to.path === '/projectDetail') {
+        if (to.path === '/home' || to.path === '/detail' || to.path === '/about' ||
+          to.path === '/contact/aboutBase' || to.path === '/contact/baseHonor' ||
+          to.path === '/contact/contactUs' || to.path === '/projectDetail') {
           this.searchIf = false
         } else {
           this.searchIf = true
         }
+        this.getPage()
         //from 对象中包含当前地址
         //to 对象中包含目标地址
         //其实还有一个next参数的，这个参数是控制路由是否跳转的，如果没写，可以不用写next()来代表允许路由跳转，如果写了就必须写next(),否则路由是不会生效的。
@@ -441,7 +479,7 @@
       // hoverNavSmenu();
       // this.hoverNavSmenu();
       var User = localStorage.getItem('user');
-      console.log(User);
+      // console.log(User);
       // var user = this.getLoginUser;
       if (User) {
         User = JSON.parse(User);
@@ -469,8 +507,7 @@
         this.searchIf = true
       }
     },
-    components: {
-    }
+    components: {}
   }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -738,7 +775,7 @@
             @include wh(100%);
             background-repeat: no-repeat;
             background-size: contain;
-            img{
+            img {
               width: 46px;
               height: 46px;
               border-radius: 50%;
@@ -1129,13 +1166,13 @@
         a:hover {
           color: #f96706;
         }
-        ul.smenu{
+        ul.smenu {
           position: absolute;
           z-index: 999;
           /*width: 86px;*/
           top: 50px;
           right: -15px;
-          box-shadow: 0 0 10px rgba(0,0,0,.3);
+          box-shadow: 0 0 10px rgba(0, 0, 0, .3);
           background: #fff;
           li {
             width: 95px;
@@ -1144,7 +1181,7 @@
             text-align: left;
             cursor: pointer;
             color: #222;
-            a{
+            a {
               width: 90px;
               display: inline-block; /*max-width:240px;*/
               overflow: hidden;
@@ -1154,14 +1191,14 @@
               text-align: center;
               padding: 0 16px;
             }
-            a:link, a:visited{
+            a:link, a:visited {
               color: #666;
               cursor: pointer;
               text-decoration: none;
             }
-            a:hover{
-              background:#F60;
-              color:#fff;
+            a:hover {
+              background: #F60;
+              color: #fff;
             }
           }
           /*li:hover{*/
@@ -1212,13 +1249,15 @@
     background-size: cover;
 
   }
+
   #hr {
     height: 2px;
     background: #f60;
     clear: both;
     font-size: 0;
   }
-  .disappear{
+
+  .disappear {
     display: none;
   }
 

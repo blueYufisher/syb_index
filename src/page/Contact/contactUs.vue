@@ -34,7 +34,7 @@
             <td>
               <div class="linewrap">
                 <ul class="lineguihau clearfix">
-                  <li><h5>自驾/出租车</h5>
+                  <li><h5>驾车</h5>
                     <p><strong>地点：广东工业大学</strong></p>
                     <p><strong>线路：</strong>大学城外环西路100号广东工业大学教学6号楼209-2</p></a></li>
                   <li><h5>公交车</h5>
@@ -48,7 +48,7 @@
                 <ul class="lineguihau clearfix">
                   <li><h5>地铁</h5>
                     <p><strong>站台：大学城站（B出口）</strong></p>
-                    <p><strong>线路：</strong>乘坐 4号线 在 大学城南站 下车</p></li>
+                    <p><strong>线路：</strong>乘坐 4号线 在 大学城南站 下车 步行1.1公里</p></li>
                 </ul>
               </div>
             </td>

@@ -1,6 +1,6 @@
 <template>
   <!--地图容器-->
-  <div id="XSDFXPage" class="XSDFXPage" style="width:100%;height:550px;border:#ccc solid 1px;"></div></template>
+  <div id="XSDFXPage" class="XSDFXPage" style="width:80%;height:550px;border:#ccc solid 1px;"></div></template>
 <script>
   /*eslint-disable */
   import mapIcon from '../assets/images/mapIcon.png'

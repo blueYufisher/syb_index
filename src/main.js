@@ -37,12 +37,13 @@ Vue.use(VueLazyload, {
   loading: require('./assets/images/loading.gif')
   // attempt: 1
 })
-Vue.config.devtools = true
-Vue.config.productionTip = false
+// Vue.config.devtools = true
+// Vue.config.productionTip = false
+Vue.config.productionTip = false;
 const whiteList =
   ['/home', '/login', '/project',
     '/service', '/search', '/refreshsearch', '/about', '/tutor',
-    '/base', '/guide', '/detail', '/projectDetail', '/contact'] // 不需要登陆的页面
+    '/base', '/guide', '/detail', '/projectDetail', '/contact', '/contact/aboutBase', '/contact/baseHonor', '/contact/brandStory', '/contact/contactUs'] // 不需要登陆的页面
 router.beforeEach(function (to, from, next) {
   let params = {
     params: {
@@ -51,7 +52,7 @@ router.beforeEach(function (to, from, next) {
     username: '',
     password: ''
   }
-  console.log("beforeEach:" ,to)
+  // console.log("beforeEach:" ,to)
   let userParams = JSON.parse(getStore("user"))
   if (userParams !== null) {
     params.username = userParams.username
@@ -59,7 +60,7 @@ router.beforeEach(function (to, from, next) {
   }
   // console.log(userParams)
   loginCheckWithoutCode(params.username, params.password).then(res => {
-    console.log(res)
+    // console.log(res)
     if (!JSON.parse(res.status)) { // 没登录
       if (whiteList.indexOf(to.path) !== -1) { // 白名单
         next()
