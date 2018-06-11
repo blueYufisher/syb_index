@@ -109,7 +109,14 @@
   }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @media (max-width: 1220px) {
+    .w{
+      width: 100%;
+    }
+  }
+  @media (max-width: 510px) {
 
+  }
   /*面包屑*/
   .bread_crumbs { /*border-top:1px solid #dbdbdb;*/
     border-bottom: 1px solid #dbdbdb;
@@ -165,7 +172,7 @@
     padding: 20px 0;
     background: #FFF;
     .content {
-      width: 1220px;
+      width: 100%;
       margin: 0 auto;
       padding: 0;
       .area {

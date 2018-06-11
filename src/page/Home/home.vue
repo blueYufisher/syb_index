@@ -5,10 +5,13 @@
       <image-show></image-show>
     </div>
     <div v-loading="loading" element-loading-text="加载中...">
+      <!--<section class="w mt30 clearfix">-->
+        <!--<home-notice></home-notice >-->
+      <!--</section>-->
       <section class="w mt30 clearfix" v-for="(index,i) in infos" :key="i">
         <home-news :index="index"></home-news>
       </section>
-      <section class="w mt30 clearfix">
+      <section class="w mt30 clearfix home-server">
         <home-server></home-server>
       </section>
       <section class="w mt30 clearfix">
@@ -34,6 +37,7 @@
   import homeNews from '/components/homeNews'
   import homeServer from '/components/homeServer'
   import homeProjects from '/components/homeProjects'
+  import HomeNotice from "../../components/homeNotice";
   // import { setStore, getStore } from '/utils/storage.js'
   export default {
     data () {
@@ -106,14 +110,30 @@
       // this.showNotify()
     },
     components: {
+      HomeNotice,
       ImageShow,
       homeNews,
       homeServer,
-      homeProjects
+      homeProjects,
+      HomeNotice
     }
   }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @media (max-width: 1220px) {
+    .w {
+      width: 95%;
+    }
+  }
+  @media (max-width: 768px) {
+    .w{
+      width: 95%;
+    }
+    .home-server{
+      display: none;
+    }
+  }
+
   .home {
     display: flex;
     flex-direction: column;
@@ -208,7 +228,7 @@
     }
     img {
       width: 130px;
-      height: 130px;
+      /*height: 130px;*/
       margin: 17px 0;
     }
     .sk_item_name {
@@ -328,6 +348,5 @@
     color: #fff;
     background: url(../../assets/images/home_news_more.jpg) no-repeat 100% 0;
   }
-
 
 </style>

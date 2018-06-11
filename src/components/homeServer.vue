@@ -59,6 +59,15 @@
   }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @media (max-width: 1220px) {
+    .arrow_right {
+      display: none;
+    }
+    .home_server ul li:not(.arrow_right){
+      width: 20%;
+    }
+  }
+
   .clearfix {
     zoom: 1;
   }

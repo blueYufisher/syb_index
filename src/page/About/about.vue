@@ -137,6 +137,38 @@
 </script>
 <style scoped lang="scss" type="text/scss">
 
+  @media (max-width: 1220px) {
+    .w{
+      width: 100%;
+    }
+    .homeCenterNav li{
+      width: 33.3%!important;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .homeCenterNav li{
+      width: 100%!important;
+      p{
+        width: 100%!important;
+      }
+    }
+  }
+
+  @media (max-width: 805px) {
+    .area {
+      img {
+        margin: 0 auto;
+        width: 95%;
+        height: auto;
+      }
+      .contentbox{
+        margin: 0 auto;
+        width: 95%;
+      }
+    }
+  }
+
   /*面包屑*/
   .bread_crumbs { /*border-top:1px solid #dbdbdb;*/
     border-bottom: 1px solid #dbdbdb;
@@ -192,7 +224,7 @@
     padding: 20px 0;
     background: #FFF;
     .content {
-      width: 1220px;
+      width: 100%;
       margin: 0 auto;
       padding: 0;
       .area {
@@ -244,7 +276,7 @@
     }
     .homeCenterNav {
       margin: 0 auto;
-      width: 1220px;
+      width: 100%;
       border-top: #F60 2px solid;
       ul {
         height: 127px;

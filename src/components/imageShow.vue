@@ -11,20 +11,38 @@
     <div class="moduleTwo">
       <div class="newest-info clr" id="newest-info">
         <div class="small">
-          <ul v-for="(info, i) in infos">
+          <ul v-for="(info, i) in infos" v-if="i<=1">
             <li>
               <div class="pic">
                 <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}">
                 <a target="_blank" title="">
-                  <img
-                    v-lazy="info.picList[0].picUrl"
-                    width="377" height="223" alt="">
+                  <img v-lazy="info.picList[0].picUrl"
+                    alt="" style="margin:0 auto;max-height: 223px;">
                 </a>
                 </router-link>
               </div>
               <div class="txt">
                 <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}">
                 <a target="_blank" title="">{{info.title}}</a>
+                </router-link>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="small">
+          <ul v-for="(info, i) in infos" v-if="i>1">
+            <li>
+              <div class="pic">
+                <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}">
+                  <a target="_blank" title="">
+                    <img v-lazy="info.picList[0].picUrl"
+                         alt="" style="margin:0 auto;max-height: 223px;">
+                  </a>
+                </router-link>
+              </div>
+              <div class="txt">
+                <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}">
+                  <a target="_blank" title="">{{info.title}}</a>
                 </router-link>
               </div>
             </li>
@@ -86,7 +104,8 @@
           currentPage: 0,
           thresholdDistance: 500,
           thresholdTime: 500,
-          autoplay: 3000,
+          // autoplay: 3000,
+          autoplay: 300000,
           loop: true,
           // direction:'vertical',
           infinite: 1,
@@ -120,6 +139,52 @@
   }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @media (max-width: 768px) {
+    .inner{
+      height: auto!important;
+    }
+    .moduleOne{
+      width: 100%!important;
+      padding-bottom: 3px;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #fff;
+      .slider-item{
+        width: 100%;
+        max-height: 500px!important;
+      }
+    }
+    .moduleTwo{
+      width: 100%;
+      .small{
+        display: flex;
+        ul{
+          width: 50%;
+        }
+      }
+      li{
+        min-height: 223px;
+        width: 100% !important;
+        line-height: 223px;
+        background: #DDDDDD;
+        div.pic{
+          display: inline-block;
+          vertical-align: middle;
+        }
+        img{
+          width: 100%;
+          display: inline-block;
+          vertical-align: middle;
+        }
+        .txt{
+          width: 100% !important;
+        }
+      }
+    }
+    .slider-wrapper{
+      padding-bottom:100%;
+    }
+  }
+
   .inner {
     width: 100%;
     height:450px;
@@ -163,7 +228,7 @@
               height: 40px;
               line-height: 42px;
               padding: 0 20px;
-              width: 377px;
+              width: 100%;
               background-image: -webkit-linear-gradient(180deg, rgba(0,0,0,0.01) 5%, rgba(0,0,0,0.4) 100%);
               background-image: -moz-linear-gradient(180deg, rgba(0,0,0,0.01) 5%, rgba(0,0,0,0.4) 100%);
               background-image: linear-gradient(180deg, rgba(0,0,0,0.01) 5%, rgba(0,0,0,0.4) 100%);

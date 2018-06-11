@@ -6,7 +6,8 @@ import {
   ADD_ANIMATION,
   SHOW_CART,
   REDUCE_CART,
-  EDIT_CART
+  EDIT_CART,
+  EDIT_SEARCHTYPE
 } from './mutation-types'
 import { setStore, getStore } from '../utils/storage'
 export default {
@@ -131,5 +132,9 @@ export default {
     } else {
       state.user = null
     }
+  },
+  // 修改搜索类型
+  [EDIT_SEARCHTYPE] (state, {type}) {
+    state.searchType = type
   }
 }

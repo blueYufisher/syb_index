@@ -1,53 +1,33 @@
 <template>
   <div class="goods">
-    <!--<div class="nav-subs">-->
-      <!--<div class="nav-sub-bgs"></div>-->
-      <!--<div class="nav-sub-wrappers">-->
-        <!--<div class="w">-->
-          <!--<ul class="nav-lists">-->
-            <!--<li>-->
-              <!--<router-link to="/">-->
-                <!--<a>首页</a>-->
-              <!--</router-link>-->
-            <!--</li>-->
-            <!--<li>-->
-              <!--<a class="active">搜索结果</a>-->
-            <!--</li>-->
-            <!--<li>-->
-              <!--<a v-if="searching === true">拼命搜索中...</a>-->
-              <!--<a v-if="searching === false">共为您找到 {{total}} 款商品信息</a>-->
-            <!--</li>-->
-          <!--</ul>-->
-          <!--<div></div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-
-    <!--<div class="nav">-->
-      <!--<div class="w">-->
-        <!--<a href="javascript:;" :class="{active:sortType===1}" @click="reset()">综合排序</a>-->
-        <!--<a href="javascript:;" @click="sortByPrice(1)" :class="{active:sortType===2}">价格从低到高</a>-->
-        <!--<a href="javascript:;" @click="sortByPrice(-1)" :class="{active:sortType===3}">价格从高到低</a>-->
-        <!--<div class="price-interval">-->
-          <!--<input type="number" class="input" placeholder="价格" v-model="min">-->
-          <!--<span style="margin: 0 5px"> - </span>-->
-          <!--<input type="number" placeholder="价格" v-model="max">-->
-          <!--<y-button text="确定" classStyle="main-btn" @btnClick="reset" style="margin-left: 10px;"></y-button>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-
+    <div class="search-result">
+      <h2>
+        搜索
+        <em>"{{key}}"</em>
+        的结果
+      </h2>
+    </div>
+    <div class="navbar">
+      <ul>
+        <li class="navitem"><a href="#" :class="{active:isActive == 1}" @click="changeNav(1)">全站</a></li>
+        <li class="navitem"><a href="#" :class="{active:isActive == 2}" @click="changeNav(2)">社区咨询</a></li>
+        <li class="navitem"><a href="#" :class="{active:isActive == 3}" @click="changeNav(3)">团队风采</a></li>
+        <li class="navitem"><a href="#" :class="{active:isActive == 4}" @click="changeNav(4)">创业导师</a></li>
+        <li class="navitem"><a href="#" :class="{active:isActive == 5}" @click="changeNav(5)">创业服务</a></li>
+        <li class="navitem"><a href="#" :class="{active:isActive == 6}" @click="changeNav(6)">服务指南</a></li>
+      </ul>
+    </div>
     <div v-loading="loading" element-loading-text="加载中..." class="img-item" v-if="infos != ''">
       <!--infos-->
       <div class="news-list">
         <ul v-for="(info, i) in infos">
           <li>
-            <p class="icon info" ></p>
+            <p class="icon search-icon" ></p>
             <div class="cnt">
               <h4>
                 <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}" target="_blank"><a target="_blank"><b>{{info.title}}</b></a></router-link>
               </h4>
-              <p class="source"><!--来源:未知&#160;&#160;-->日期：{{info.releaseTime}}&#160;&#160;点击：</small>
+              <p class="source"><!--来源:未知&#160;&#160;-->日期：{{info.updateTime}}&#160;&#160;点击：
                 {{info.visit}}</p>
               <p class="summary">
                 {{info.note}}</p>
@@ -100,10 +80,48 @@
         :total="total">
       </el-pagination>
     </div>
-    <div v-loading="loading" element-loading-text="加载中..." class="no-info" v-else-if="infos == '' && projects == ''">
+    <div v-loading="loading" element-loading-text="加载中..." class="img-item" v-else-if="infos_projects != ''">
+      <!--infos_projects-->
+      <div class="news-list">
+        <ul v-for="(info_project, i) in infos_projects">
+          <li>
+            <p class="icon search-icon" ></p>
+            <div class="cnt">
+              <h4 v-if="info_project.type !== 4">
+                <router-link :to="{path:'/detail', query:{type: info_project.type, id: info_project.id}}" target="_blank"><a target="_blank"><b>{{info_project.title}}</b></a></router-link>
+              </h4>
+              <h4 v-else>
+                <router-link :to="{path:'/projectDetail', query:{id: info_project.id}}" target="_blank"><a target="_blank"><b>{{info_project.title}}</b></a></router-link>
+              </h4>
+              <p class="source"><!--来源:未知&#160;&#160;-->日期：{{info_project.updateTime}}&#160;&#160;点击：
+                {{info_project.visit}}</p>
+              <p class="summary">
+                {{info_project.note}}</p>
+              <router-link :to="{path:'/detail', query:{type: info_project.type, id: info_project.id}}" target="_blank"  v-if="info_project.type !== 4">
+                <a class="news_more" target="_blank">详情</a>
+              </router-link>
+              <router-link :to="{path:'/projectDetail', query:{id: info_project.id}}" target="_blank"  v-else>
+                <a class="news_more" target="_blank">详情</a>
+              </router-link>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[10, 20, 40, 80]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div>
+    <div v-loading="loading" element-loading-text="加载中..." class="no-info" v-else-if="infos == '' && projects == '' && infos_projects == ''">
       <div class="no-data">
         <img src="../../assets/images/no-search.png">
-        <br> 抱歉！没有为您找到相关的商品
+        <br> 抱歉！没有为您找到相关的文章
       </div>
     </div>
     <div v-else>
@@ -128,7 +146,7 @@
         <div class="news-list" style="width: 100%">
           <ul v-for="(info, i) in infsosRecommend">
             <li>
-              <p class="icon info"></p>
+              <p class="icon like"></p>
               <div class="cnt">
                 <h4>
                   <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}" target="_blank"><a
@@ -154,7 +172,7 @@
         <div class="news-list" style="width: 100%">
           <ul v-for="(project, i) in projectsRecommend">
             <li>
-              <p class="icon info"></p>
+              <p class="icon like"></p>
               <div class="cnt">
                 <h4>
                   <router-link :to="{path:'/projectDetail', query:{id: project.id}}" target="_blank"><a target="_blank"><b>{{project.projName}}</b></a>
@@ -172,12 +190,45 @@
           </ul>
         </div>
       </div>
+      <div class="commend" v-if="infos_projectsRecommend != ''">
+        <div class="home_server_line">
+          <div></div>
+        </div>
+        <h3>为你推荐</h3>
+        <div class="news-list" style="width: 100%">
+          <ul v-for="(info_project, i) in infos_projectsRecommend">
+            <li>
+              <p class="icon like"></p>
+              <div class="cnt">
+                <h4 v-if="info_project.type !== 4">
+                  <router-link :to="{path:'/detail', query:{type: info_project.type, id: info_project.id}}" target="_blank"><a target="_blank"><b>{{info_project.title}}</b></a></router-link>
+                </h4>
+                <h4 v-else>
+                  <router-link :to="{path:'/projectDetail', query:{id: info_project.id}}" target="_blank"><a target="_blank"><b>{{info_project.title}}</b></a></router-link>
+                </h4>
+                <p class="source"><!--来源:未知&#160;&#160;-->日期：{{info_project.updateTime}}&#160;&#160;点击：</small>
+                  {{info_project.visit}}</p>
+                <p class="summary">
+                  {{info_project.note}}</p>
+                <router-link :to="{path:'/detail', query:{type: info_project.type, id: info_project.id}}" target="_blank"  v-if="info_project.type !== 4">
+                  <a class="news_more" target="_blank">详情</a>
+                </router-link>
+                <router-link :to="{path:'/projectDetail', query:{id: info_project.id}}" target="_blank"  v-else>
+                  <a class="news_more" target="_blank">详情</a>
+                </router-link>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
+  /* eslint-disable */
   // import {getSearch} from '/api/goods.js'
-  import {searchInfoByTypeId, searchProjectByProjNameOrCompanyName, findInfoNumByVisit, findProjectNumByVisit} from '/api/index.js'
+  import {searchInfoByTypeId, searchProjectByProjNameOrCompanyName, findInfoNumByVisit,
+    findProjectNumByVisit, fullTextSearch, fullTextRecommendByVisit} from '/api/index.js'
   import {formatDate} from '/common/js/util.js'
   import YButton from '/components/YButton'
   import YShelf from '/components/shelf'
@@ -190,6 +241,7 @@
         serverUrl: process.env.API_ROOT,  // 打包部署上线时
         projects: [],
         infos: [],
+        infos_projects: [],
         min: '',
         max: '',
         loading: true,
@@ -201,10 +253,14 @@
         sort: '',
         infsosRecommend: [],
         projectsRecommend: [],
+        infos_projectsRecommend: [],
         currentPage: 1,
         pageSize: 10,
         total: 0,
-        key: ''
+        key: '',
+        isActive: -1,
+        _infoProj: -1,
+        _ints: []
       }
     },
     methods: {
@@ -233,7 +289,7 @@
             if (res.status) {
               let data = res.data.resultList
               data.forEach((item, index) => {
-                item.releaseTime = formatDate(item.releaseTime, 'yyyy-MM-dd')
+                item.updateTime = formatDate(item.updateTime, 'yyyy-MM-dd')
               })
               this.infos = data
               this.total = res.data.totalRecord
@@ -254,6 +310,24 @@
                 item.enterTime = formatDate(item.enterTime, 'yyyy-MM-dd')
               })
               this.projects = data
+              this.total = res.data.totalRecord
+            }
+            this.loading = false
+            this.searching = false
+          })
+        } else if (infoProj === '3') {
+          let params = {
+            title: this.key,
+            content: this.key,
+            companyName: this.key
+          }
+          fullTextSearch(this.currentPage, this.pageSize, JSON.stringify(params)).then(res => {
+            if (res.status) {
+              let data = res.data.resultList
+              data.forEach((item, index) => {
+                item.updateTime = formatDate(item.updateTime, 'yyyy-MM-dd')
+              })
+              this.infos_projects = data
               this.total = res.data.totalRecord
             }
             this.loading = false
@@ -288,6 +362,80 @@
               this.projectsRecommend = data
             }
           })
+        } else if (infoProj === '3') {
+          fullTextRecommendByVisit(10).then(res => {
+            if (res.status) {
+              let data = res.data
+              data.forEach((item, index) => {
+                item.updateTime = formatDate(item.updateTime, 'yyyy-MM-dd')
+              })
+              this.infos_projectsRecommend = data
+            }
+          })
+        }
+      },
+      __getSearch__ (infoProj, _ints) {
+        this.loading = true
+        this.infos = []
+        this.projects = []
+        this.infos_projects = []
+        if (infoProj === 1) {
+          let params = {
+            currentPage: this.currentPage,
+            pageSize: this.pageSize,
+            ints: _ints,
+            title: this.key,
+            content: this.key
+          }
+          searchInfoByTypeId(JSON.stringify(params)).then(res => {
+            if (res.status) {
+              let data = res.data.resultList
+              data.forEach((item, index) => {
+                item.updateTime = formatDate(item.updateTime, 'yyyy-MM-dd')
+              })
+              this.infos = data
+              this.total = res.data.totalRecord
+            }
+            this.loading = false
+            this.searching = false
+          })
+        } else if (infoProj === 2) {
+          let params = {
+            projName: this.key,
+            companyName: this.key,
+            content: this.key
+          }
+          searchProjectByProjNameOrCompanyName(this.currentPage, this.pageSize, JSON.stringify(params)).then(res => {
+            if (res.status) {
+              let data = res.data.resultList
+              data.forEach((item, index) => {
+                item.picUrl = this.serverUrl + '\\images\\' + item.picUrl
+                item.enterTime = formatDate(item.enterTime, 'yyyy-MM-dd')
+              })
+              this.projects = data
+              this.total = res.data.totalRecord
+            }
+            this.loading = false
+            this.searching = false
+          })
+        } else if (infoProj === 3) {
+          let params = {
+            title: this.key,
+            content: this.key,
+            companyName: this.key
+          }
+          fullTextSearch(this.currentPage, this.pageSize, JSON.stringify(params)).then(res => {
+            if (res.status) {
+              let data = res.data.resultList
+              data.forEach((item, index) => {
+                item.updateTime = formatDate(item.updateTime, 'yyyy-MM-dd')
+              })
+              this.infos_projects = data
+              this.total = res.data.totalRecord
+            }
+            this.loading = false
+            this.searching = false
+          })
         }
       },
       // 默认排序
@@ -305,6 +453,39 @@
         this.currentPage = 1
         this.loading = true
         this._getSearch()
+      },
+      changeNav (v) {
+        this.isActive = v
+      }
+    },
+    watch: {
+      'isActive': function () {
+        console.log(this.isActive)
+        switch (this.isActive){
+          case 1:
+            this._infoProj = 3
+            break
+          case 2:
+            this._infoProj = 1
+            this._ints = [1, 2, 3]
+            break
+          case 3:
+            this._infoProj = 2
+            break
+          case 4:
+            this._infoProj = 1
+            this._ints = [6]
+            break
+          case 5:
+            this._infoProj = 1
+            this._ints = [5, 7, 8, 9, 14]
+            break
+          case 6:
+            this._infoProj = 1
+            this._ints = [10, 11, 12, 13]
+            break
+        }
+        this.__getSearch__(this._infoProj, this._ints)
       }
     },
     created () {
@@ -313,9 +494,10 @@
       this.windowHeight = window.innerHeight
       this.windowWidth = window.innerWidth
       this.key = this.$route.query.key
-      console.log('serverUrl:', this.serverUrl)
+      // console.log('serverUrl:', this.serverUrl)
       this._getSearch()
       this._getRecommendSearch()
+      this.isActive = getStore('searchType')
     },
     components: {
       YButton,
@@ -328,6 +510,93 @@
 <style scoped lang="scss" type="text/scss">
   @import "../../assets/style/mixin";
   @import "../../assets/style/theme";
+  @media (max-width: 1220px) {
+    .navbar{
+      width: 100%;
+    }
+    .news-list{
+      width: 96%!important;
+      margin: 0 2%!important;
+      .icon{
+        width: 5% !important;
+      }
+      .img{
+        display: none!important;
+      }
+      .cnt{
+        width: 90%!important;
+      }
+    }
+    .commend{
+      width: 96%!important;
+      margin: 0 2%!important;
+    }
+  }
+  @media (max-width: 680px) {
+    .news-list {
+      .icon, .img {
+        display: none!important;
+      }
+      .cnt{
+        width: 95%!important;
+        margin-left: 2%;
+      }
+    }
+  }
+  @media (max-width: 510px) {
+
+  }
+  .search-result{
+    width: 1220px;
+    height: 25px;
+    margin: 10px auto 20px auto;
+    color:#333333;
+    font-size: 16px;
+    line-height: 25px;
+    padding: 30px 0;
+    h2{
+      font-size: 100%;
+      font-weight: normal;
+      em{
+        color: #ff6600;
+      }
+    }
+  }
+  .navbar{
+    width: 1220px;
+    height: 50px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    background-color: #f96706;
+    ul{
+      list-style-type: none;
+      line-height: 50px;
+      .navitem{
+        float: left;
+        a{
+          display: block;
+          padding:0 15px;
+          text-decoration: none;
+          color:#FFF;
+          font-size: 14px;
+          &:not(.active):hover {
+            color: #FFF;
+            font-size: 16px;
+            font-weight: bold;
+          }
+        }
+        .active{
+          color:#ff6600;
+          font-weight:bold;
+          border-top: 2px #ff6600 solid;
+          border-bottom: 1px #ff6600 solid;
+          background: #FFFFFF;
+          height: 49px;
+        }
+      }
+    }
+  }
+
 
   .nav {
     height: 60px;
@@ -515,7 +784,7 @@
   }
   .news-list .cnt {
     float: left;
-    width: 85%;
+    width: 84%;
   }
   .news-list .source {
     margin-bottom: 2px;
@@ -527,6 +796,14 @@
 
   .info {
     background: url(../../assets/images/info-sign.png) no-repeat 0 0
+  }
+
+  .search-icon{
+    background: url(../../assets/images/search-32.png) no-repeat 0 0
+  }
+
+  .like{
+    background: url(../../assets/images/like-quality-32.png) no-repeat 0 0
   }
 
   .news_more{

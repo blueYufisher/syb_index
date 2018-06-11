@@ -63,7 +63,11 @@
 <style scoped lang="scss" type="text/scss">
   @import "../assets/style/mixin";
   @import "../assets/style/theme";
-
+  @media (max-width: 768px){
+    .home_project{
+      width: 49% !important;
+    }
+  }
   /*.home_project {*/
     /*!*width: 950px;*!*/
     /*height: 200px;*/
@@ -73,8 +77,7 @@
   .home_project {
     background: #fff;
     width: 19%;
-    margin-left: 0.5%;
-    margin-right: 0.5%;
+    margin:0.5%;
     transition: all .5s;
     height: 180px;
     &:hover {
@@ -94,10 +97,19 @@
     }*/
 
     .good-img {
+      margin:5px auto;
+      a{
+        display:flex;
+        display: -webkit-flex;
+        align-items:center;
+        justify-content:center;
+        height:113px;
+      }
       img {
-        margin: 10px auto 5px;
-        @include wh(113px);
-        display: block;
+        margin: 10px auto;
+        /* @include wh(113px);*/
+        width:113px;
+        max-height:113px;
       }
     }
     .good-price {

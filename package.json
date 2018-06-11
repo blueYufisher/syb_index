@@ -1,8 +1,8 @@
 {
-  "name": "vue-node-mall",
+  "name": "syb",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "yucccc <13450003105@163.com>",
+  "description": "syb web",
+  "author": "BlueFisher <331891923@qq.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -22,7 +22,8 @@
     "vue-infinite-scroll": "^2.0.1",
     "vue-lazyload": "^1.0.5",
     "vue-router": "^2.3.1",
-    "vuex": "^2.3.1"
+    "vuex": "^2.3.1",
+    "wangeditor": ">=3.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

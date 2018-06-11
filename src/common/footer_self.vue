@@ -75,7 +75,7 @@
       </div>
 
       <div class="copyright">
-        <h4 class="content-c2">Copyright © 2015-{{date}} 广东工业大学学生就业指导中心 All Rights Reserved @BlueFisher</h4>
+        <h4 class="content-c2">Copyright © 2015-{{date}} 广东工业大学学生就业指导中心 All Rights Reserved</h4>
         <!--<ul class="privacy">-->
           <!--<li class="content-c1"><a class="content-c0" @click="open1">法律声明</a></li>-->
           <!--<li class="content-c1"><a class="content-c0" @click="open2">隐私条款</a></li>-->
@@ -142,6 +142,34 @@
       /*}*/
     /*}*/
   /*}*/
+  @media (max-width: 1220px) {
+    .container{
+      width: 100% !important;
+    }
+    .siteinfo{
+      height: auto!important;
+      overflow: hidden;
+      padding: 0!important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .copyright, .cop{
+      display: block!important;
+      margin-left: 15px;
+    }
+    .nav-logo a{
+      background: url(../assets/images/L.png) no-repeat!important;
+      width: 72px!important;
+      margin-right: 15px;
+    }
+    .footer{
+      .c0{
+        margin-left: 15px;
+      }
+    }
+  }
+
   .footer {
     padding: 50px 0 20px;
     border-top: 1px solid #e6e6e6;

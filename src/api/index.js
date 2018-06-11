@@ -37,8 +37,14 @@ export const limitInfosByTypeAndCurrentPageAndPageSize = (type, currentPage, pag
 export const modifyInfoVisit = (id) => {
   return http.fetchGet(serverUrl + '/modifyInfoVisit?id=' + id)
 }
+export const fullTextRecommendByVisit = (num) => {
+  return http.fetchGet(serverUrl + '/fullTextRecommendByVisit?num=' + num)
+}
 export const searchInfosByTitleOrNote = (currentPage, pageSize, params) => {
   return http.fetchPost(serverUrl + '/searchInfosByTitleOrNote?currentPage=' + currentPage + '&pageSize=' + pageSize, params)
+}
+export const fullTextSearch = (currentPage, pageSize, params) => {
+  return http.fetchPost(serverUrl + '/fullTextSearch?currentPage=' + currentPage + '&pageSize=' + pageSize, params)
 }
 export const searchInfoByTypeId = (params) => {
   return http.fetchPost(serverUrl + '/searchInfoByTypeId', params)
@@ -65,4 +71,18 @@ export const searchProjectByProjNameOrCompanyName = (currentPage, pageSize, para
 
 export const selectPictureById = (id) => {
   return http.fetchGet(serverUrl + '/selectPictureById?id=' + id)
+}
+
+export const addCommentReply = (params) => {
+  return http.fetchPost(serverUrl + '/addCommentReply', params)
+}
+export const selectCommentListByInfoId = (id) => {
+  return http.fetchGet(serverUrl + '/selectCommentListByInfoId?id=' + id)
+}
+export const selectCommentListByProjectId = (id) => {
+  return http.fetchGet(serverUrl + '/selectCommentListByProjectId?id=' + id)
+}
+
+export const updateThumbs = (params) => {
+  return http.fetchPost(serverUrl + '/updateThumbs', params)
 }

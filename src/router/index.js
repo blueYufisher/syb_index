@@ -15,6 +15,7 @@ const Service = () => import('/page/Service/service.vue')
 const Contact = () => import('/page/About/contact.vue')
 const Detail = () => import('/page/Detail/detail.vue')
 const Search = () => import('/page/Search/search.vue')
+const RefreshSearch = () => import('/page/Search/refreshsearch.vue')
 const AboutBase = () => import('/page/Contact/aboutBase.vue')
 const BaseHonor = () => import('/page/Contact/baseHonor.vue')
 const BrandStory = () => import('/page/Contact/brandStory.vue')
@@ -48,7 +49,8 @@ export default new Router({
         },
         {path: 'detail', component: Detail},
         {path: 'projectDetail', name: 'projectDetail', component: projectDetail},
-        {path: 'search', name: 'search', component: Search}
+        {path: 'search', name: 'search', component: Search},
+        {path: 'refreshsearch', name: 'refreshsearch', component: RefreshSearch}
       ]
     },
     // {

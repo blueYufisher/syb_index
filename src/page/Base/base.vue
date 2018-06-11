@@ -51,8 +51,8 @@
                         <h4>
                           <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}" target="_blank"><a target="_blank"><b>{{info.title}}</b></a></router-link>
                         </h4>
-                        <p class="source"><!--来源:未知&#160;&#160;-->日期：{{info.releaseTime}}&#160;&#160;点击：</small>
-                          {{info.visit}}</p>
+                        <p class="source"><!--来源:未知&#160;&#160;-->日期：{{info.releaseTime}}&#160;&#160;点击：{{info.visit}}&#160;&#160;
+                          评论：{{info.comments}}</p>
                         <p class="summary">
                           {{info.note}}</p>
                         <router-link :to="{path:'/detail', query:{type: info.type, id: info.id}}" target="_blank">
@@ -195,6 +195,44 @@
 </script>
 <style scoped lang="scss" type="text/scss">
 
+  @media (max-width: 1220px) {
+    .w{
+      width: 100%;
+    }
+    .w245{
+      width: 19%!important;
+      margin-left: 1%;
+    }
+    .w670{
+      width: 78%!important;
+      margin-right: 2%;
+    }
+    .news-list {
+      .icon{
+        width: 10%!important;
+      }
+      .cnt{
+        width: 85%!important;
+      }
+    }
+  }
+  @media (max-width: 510px) {
+    .w245{
+      display: none;
+    }
+    .w670{
+      width: 95%!important;
+    }
+    .news-list {
+      .icon{
+        display: none!important;
+      }
+      .cnt{
+        width: 95%!important;
+      }
+    }
+  }
+
   /*面包屑*/
   .bread_crumbs { /*border-top:1px solid #dbdbdb;*/
     border-bottom: 1px solid #dbdbdb;
@@ -245,7 +283,7 @@
   }
 
   .container {
-    width: 1220px;
+    width: 100%;
     margin: 0 auto;
     .news_padding {
       padding: 25px 0 0;

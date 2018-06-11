@@ -94,6 +94,10 @@
           <div class="honordiv"><span><img v-lazy="img23"></span>
             <p class="name">广东省大学生创新创业教育示范学校</p></div>
         </li>
+        <li>
+          <div class="honordiv"><span><img v-lazy="img24"></span>
+            <p class="name">独角兽牧场创新创业联合孵化基地</p></div>
+        </li>
 
       </ul>
     </div>
@@ -124,6 +128,7 @@
   var pai21 = require("../../assets/images/pai21.jpg")
   var pai22 = require("../../assets/images/pai22.jpg")
   var pai23 = require("../../assets/images/pai23.jpg")
+  var pai24 = require("../../assets/images/pai24.jpg")
   export default {
     data() {
       return {
@@ -150,6 +155,7 @@
         img21: pai21,
         img22: pai22,
         img23: pai23,
+        img24: pai24
       }
     },
     computed: {},
@@ -162,6 +168,25 @@
   }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @media (max-width: 1110px) {
+    .honorlist ul li{
+      width: 48% !important;
+      margin: 0 1% !important;
+    }
+  }
+  @media (max-width: 768px) {
+    .honorlist ul li{
+      width: 96% !important;
+      margin: 0 2% !important;
+      span{
+        height: auto!important;
+        img{
+          width: 100% !important;
+          height: 100% !important;
+        }
+      }
+    }
+  }
   .commonwebbox {
     border-bottom: 1px solid #ccc;
   }

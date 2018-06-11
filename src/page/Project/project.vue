@@ -28,7 +28,7 @@
                       </p>
                       <div class="cnt">
                           <h4><router-link :to="{path:'/projectDetail', query:{id: project.id}}" target="_blank"><a target="_blank"><b>{{project.projName}}</b></a></router-link></h4>
-                          <p class="source">浏览次数：{{project.visit}} &#160;|&#160;{{project.enterTime}}</p>
+                          <p class="source">浏览次数：{{project.visit}} &#160;|&#160;{{project.enterTime}}&#160;&#160;评论：{{project.comments}}&#160;&#160;状态：{{project.status?"出孵":"在孵"}}</p>
                           <p class="summary">项目简介： {{project.note}} </p>
                       </div>
                     </li>
@@ -156,7 +156,59 @@
   }
 </script>
 <style scoped lang="scss" type="text/scss">
-
+  @media (max-width: 1220px) {
+    .w{
+      width: 100%;
+    }
+    .w245{
+      width: 18%!important;
+      margin-right: 2%;
+    }
+    .w670{
+      width: 78%!important;
+      margin-left: 2%;
+    }
+    .news-list {
+      .img {
+        width: 10%;
+        img {
+          width: 100% !important;
+          height: auto;
+        }
+      }
+      .cnt{
+        width: 85%!important;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .w245{
+      display: none;
+    }
+    .w670{
+      width: 95%!important;
+    }
+  }
+  @media (max-width: 510px) {
+    .news-list {
+      .img {
+        width: 100%!important;
+        margin: 0 auto;
+        display: block;
+        border: 0!important;
+        img{
+          width: 60%!important;
+          margin: 0 auto;
+          display: block;
+          border:1px solid rgb(204, 204, 204) !important;
+        }
+      }
+      .cnt{
+        width: 95%!important;
+        margin-left: 2%;
+      }
+    }
+  }
   /*面包屑*/
   .bread_crumbs { /*border-top:1px solid #dbdbdb;*/
     border-bottom: 1px solid #dbdbdb;
@@ -207,7 +259,7 @@
   }
 
   .container {
-    width: 1220px;
+    width: 100%;
     margin: 0 auto;
     .news_padding {
       padding: 25px 0 0;

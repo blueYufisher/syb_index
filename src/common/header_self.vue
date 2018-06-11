@@ -10,6 +10,17 @@
           </div>
           <div class="right-box">
             <div class="nav-list" v-if="searchIf">
+              <div class="searchType"  @mouseover="bgOver1('搜索下拉')" @mouseout="bgOut('搜索下拉')">
+                <div class="sehType-name"><span class="site-name">{{searchType}}</span><span class="arrow"></span></div>
+                <div class="sehType-list" :class="{disappear:hoverNav!=='搜索下拉'}">
+                  <p data-type="full" @click="changeSearch(0)">全站</p>
+                  <p data-type="base" @click="changeSearch(1)">社区咨询</p>
+                  <p data-type="project" @click="changeSearch(2)">团队风采</p>
+                  <p data-type="tutor" @click="changeSearch(3)">创业导师</p>
+                  <p data-type="service" @click="changeSearch(4)">创业服务</p>
+                  <p data-type="guide" @click="changeSearch(5)">服务指南</p>
+                </div>
+              </div>
               <el-autocomplete
                 :placeholder="placeholder"
                 icon="search"
@@ -28,6 +39,9 @@
               <router-link to="/">应用下载</router-link>
               <router-link to="/">官方论坛</router-link> -->
             </div>
+            <a href="javascript:;"class="menu" @click="changeExpand">
+              <i></i>
+            </a>
             <div class="nav-aside" ref="aside" :class="{fixed:st}">
               <div class="user pr">
                 <a href="http://job.gdut.edu.cn/syb/admin/index.html#/login" target=_blank>个人中心</a>
@@ -59,7 +73,37 @@
         </div>
       </header>
       <slot name="navnav">
-        <div class="nav-sub" :class="{fixed:st}">
+        <div class="nav-sub"  :class="{fixed:st,expand:isMenu}">
+          <div class="nav-list" v-if="searchIf">
+            <div class="searchType"  @mouseover="bgOver1('搜索下拉')" @mouseout="bgOut('搜索下拉')">
+              <div class="sehType-name"><span class="site-name">{{searchType}}</span><span class="arrow"></span></div>
+              <div class="sehType-list" :class="{disappear:hoverNav!=='搜索下拉'}">
+                <p data-type="full" @click="changeSearch(0)">全站</p>
+                <p data-type="base" @click="changeSearch(1)">社区咨询</p>
+                <p data-type="project" @click="changeSearch(2)">团队风采</p>
+                <p data-type="tutor" @click="changeSearch(3)">创业导师</p>
+                <p data-type="service" @click="changeSearch(4)">创业服务</p>
+                <p data-type="guide" @click="changeSearch(5)">服务指南</p>
+              </div>
+            </div>
+            <el-autocomplete
+              :placeholder="placeholder"
+              icon="search"
+              v-model="input"
+              minlength=1
+              maxlength=100
+              :fetch-suggestions="querySearchAsync"
+              @select="handleSelect"
+              :on-icon-click="handleIconClick">
+            </el-autocomplete>
+            <!--<router-link to="/goods"><a @click="changePage(2)">全部商品</a></router-link>-->
+            <!--<router-link to="/thanks"><a @click="changePage(3)">捐赠</a></router-link>-->
+            <!-- <router-link to="/">Smartisan M1 / M1L</router-link>
+            <router-link to="/">Smartisan OS</router-link>
+            <router-link to="/">欢喜云</router-link>
+            <router-link to="/">应用下载</router-link>
+            <router-link to="/">官方论坛</router-link> -->
+          </div>
           <div class="nav-sub-bg"></div>
           <div class="nav-sub-wrapper" :class="{fixed:st}" id="navigation">
             <div class="w">
@@ -151,7 +195,7 @@
   /* eslint-disable */
   // import YButton from '/components/YButton'
   import {mapMutations, mapState} from 'vuex'
-  import {searchInfosByTitleOrNote, searchProjectByProjNameOrCompanyName, searchInfoByTypeId, logout} from '/api/index'
+  import {searchInfosByTitleOrNote, searchProjectByProjNameOrCompanyName, searchInfoByTypeId, logout, fullTextSearch} from '/api/index'
   // import {loginOut} from '/api/index'
   import {setStore, getStore, removeStore} from '/utils/storage'
   // import $ from 'jquery'
@@ -178,11 +222,13 @@
         timeout: null,
         token: '',
         hoverNav: '',
-        searchIf: false,
+        searchIf: true,
         url_num: '',
         sysUserName: '',
         sysUserAvatar: '',
-        placeholder: ''
+        placeholder: '请输入文字搜索',
+        searchType:'全站',
+        isMenu: false
       }
     },
     computed: {
@@ -207,10 +253,14 @@
       // }
     },
     methods: {
-      ...mapMutations(['RECORD_USERINFO']),
+      ...mapMutations(['GET_SEARCHTYPE']),
       bgOver(e) {
         // console.log(e.text)
         this.hoverNav = e.text
+      },
+      bgOver1(e) {
+        // console.log(e)
+        this.hoverNav = e
       },
       bgOut(e) {
         // console.log(e)
@@ -232,17 +282,57 @@
             }
           })
         }
+        this.isMenu = false
+        document.body.setAttribute("class","notMenu")
       },
       // 导航栏文字样式改变
       changePage(v) {
         this.choosePage = v
       },
+      changeSearch(v) {
+        switch (v){
+          case 0:
+            this.searchType = '全站';
+            setStore('searchType',1);
+            break;
+          case 1:
+            this.searchType = '社区咨询';
+            setStore('searchType',2);
+            break;
+          case 2:
+            this.searchType = '团队风采';
+            setStore('searchType',3);
+
+            break;
+          case 3:
+            this.searchType = '创业导师';
+            setStore('searchType',4);
+            break;
+          case 4:
+            this.searchType = '创业服务';
+            setStore('searchType',5);
+            break;
+          case 5:
+            this.searchType = '服务指南';
+            setStore('searchType',6);
+            break;
+        }
+      },
       // 搜索框提示
       loadAll() {
         let _this = this
         return new Promise((resolve, reject) => {
-          switch (this.url_num) {
-            case "/base":
+          switch (this.searchType) {
+            case "全站":
+              setStore("info_proj", 3)
+                  _this.postInfoProjData(1, 10).then(array => {
+                    resolve(array)
+                  }).catch(() => {
+                    reject([])
+                  })
+                  break;
+
+            case "社区咨询":
               setStore("ints", [1, 2, 3])
               setStore("info_proj", 1)
               _this.postInfoData(1, 10, [1, 2, 3]).then(array => {
@@ -254,7 +344,7 @@
               })
               break;
 
-            case "/project":
+            case "团队风采":
               setStore("info_proj", 2)
               _this.postProjData(1, 10).then(array => {
                 // console.log("array:", array)
@@ -265,7 +355,7 @@
               })
               break;
 
-            case "/tutor":
+            case "创业导师":
               setStore("ints", [6])
               setStore("info_proj", 1)
               _this.postInfoData(1, 10, [6]).then(array => {
@@ -277,7 +367,7 @@
               })
               break;
 
-            case "/service":
+            case "创业服务":
               setStore("ints", [5, 7, 8, 9, 14])
               setStore("info_proj", 1)
               _this.postInfoData(1, 10, [5, 7, 8, 9, 14]).then(array => {
@@ -289,7 +379,7 @@
               })
               break;
 
-            case "/guide":
+            case "服务指南":
               setStore("ints", [10, 11, 12, 13])
               setStore("info_proj", 1)
               _this.postInfoData(1, 10, [10, 11, 12, 13]).then(array => {
@@ -309,7 +399,7 @@
           pageSize: pageSize,
           ints: ints,
           title: this.input,
-          note: this.input
+          content: this.input
         }
         this.searchResults = []
         return new Promise((resolve, reject) => {
@@ -336,7 +426,8 @@
       postProjData(currentPage, pageSize) {
         let postProjObj = {
           projName: this.input,
-          companyName: this.input
+          companyName: this.input,
+          content: this.input
         }
         this.searchResults = []
         return new Promise((resolve, reject) => {
@@ -350,6 +441,34 @@
             for (let i = 0; i < maxSize; i++) {
               let obj = {}
               obj.value = res.data.resultList[i].projName
+              array.push(obj)
+            }
+            if (array.length !== 0) {
+              resolve(array)
+            } else {
+              reject()
+            }
+          })
+        })
+      },
+      postInfoProjData(currentPage, pageSize) {
+        let postProjObj = {
+          title: this.input,
+          content: this.input,
+          companyName: this.input
+        }
+        this.searchResults = []
+        return new Promise((resolve, reject) => {
+          fullTextSearch(currentPage, pageSize, JSON.stringify(postProjObj)).then(res => {
+            // console.log(res.resultList)
+            let array = []
+            let maxSize = 5
+            if (res.data.resultList.length <= 5) {
+              maxSize = res.data.resultList.length
+            }
+            for (let i = 0; i < maxSize; i++) {
+              let obj = {}
+              obj.value = res.data.resultList[i].title
               array.push(obj)
             }
             if (array.length !== 0) {
@@ -435,25 +554,33 @@
         } else if (this.$route.path === '/about') {
           this.changePage(2)
         } else if (url === '/base') {
-          this.placeholder = "请输入文字搜索社区咨询";
+          // this.placeholder = "请输入文字搜索社区咨询";
           this.changePage(3)
         } else if (this.$route.path === '/project') {
-          this.placeholder = "请输入文字搜索团队";
+          // this.placeholder = "请输入文字搜索团队";
           this.changePage(4)
         } else if (this.$route.path === '/tutor') {
-          this.placeholder = "请输入文字搜索创业导师";
+          // this.placeholder = "请输入文字搜索创业导师";
           this.changePage(5)
         } else if (url === '/service') {
-          this.placeholder = "请输入文字搜索创业服务";
+          // this.placeholder = "请输入文字搜索创业服务";
           this.changePage(6)
         } else if (url === '/guide') {
-          this.placeholder = "请输入文字搜索服务指南";
+          // this.placeholder = "请输入文字搜索服务指南";
           this.changePage(7)
         } else if (this.$route.path === '/contact/aboutBase' ||
           this.$route.path === '/contact/baseHonor' || this.$route.path === '/contact/contactUs') {
           this.changePage(8)
         } else {
           this.changePage(-1)
+        }
+      },
+      changeExpand() {
+        this.isMenu = !this.isMenu
+        if (this.isMenu){
+          document.body.setAttribute("class","isMenu")
+        } else {
+          document.body.setAttribute("class","notMenu")
         }
       }
     },
@@ -462,13 +589,16 @@
         let _this = this
         this.input = ''
         this.url_num = to.path
-        if (to.path === '/home' || to.path === '/detail' || to.path === '/about' ||
-          to.path === '/contact/aboutBase' || to.path === '/contact/baseHonor' ||
-          to.path === '/contact/contactUs' || to.path === '/projectDetail') {
-          this.searchIf = false
-        } else {
-          this.searchIf = true
-        }
+        this.searchType = '全站'
+        this.isMenu = false
+        document.body.setAttribute("class","notMenu")
+        // if (to.path === '/home' || to.path === '/detail' || to.path === '/about' ||
+        //   to.path === '/contact/aboutBase' || to.path === '/contact/baseHonor' ||
+        //   to.path === '/contact/contactUs' || to.path === '/projectDetail') {
+        //   this.searchIf = false
+        // } else {
+        //   this.searchIf = true
+        // }
         this.getPage()
         //from 对象中包含当前地址
         //to 对象中包含目标地址
@@ -501,11 +631,14 @@
       if (typeof (this.$route.query.key) !== undefined) {
         this.input = this.$route.query.key
       }
-      if (this.$route.path === '/home' || this.$route.path === '/detail' || this.$route.path === '/about' || this.$route.path === '/contact' || this.$route.path === '/projectDetail') {
-        this.searchIf = false
-      } else {
-        this.searchIf = true
-      }
+      // if (this.$route.path === '/home' || this.$route.path === '/detail' || this.$route.path === '/about' || this.$route.path === '/contact' || this.$route.path === '/projectDetail') {
+      //   this.searchIf = false
+      // } else {
+      //   this.searchIf = true
+      // }
+      setStore('searchType',1)
+      this.isMenu = false
+      document.body.setAttribute("class","notMenu")
     },
     components: {}
   }
@@ -609,6 +742,7 @@
     justify-content: space-between;
     align-items: center;
     height: 100%;
+    width: 100%;
     // position: relative;
     h1 {
       height: 100%;
@@ -697,8 +831,17 @@
       }
     }
 
+    .nav-logo{
+      /*float:left;*/
+      /*width: 20%;*/
+    }
     .right-box {
       display: flex;
+      position: relative;
+      /*float:right;*/
+      z-index: 1;
+      /*width: 80%;*/
+
     }
     .nav-aside {
       display: flex;
@@ -1063,6 +1206,100 @@
     }
   }
 
+  @media (max-width: 1220px) {
+    .w{
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    a.menu {
+      display: flex;
+      float: right;
+    }
+    a.menu i {
+      width: 36px;
+      height: 36px;
+      background-image: url("../assets/images/icons8-menu-48.png");
+      background-size: contain;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .w-box .user {
+      margin-left: 5px;
+    }
+    .right-box{
+      margin-right: 10px;
+      .nav-list {
+        display: none;
+      }
+    }
+
+    .nav-sub {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0 !important;
+      z-index: 1;
+      overflow: hidden;
+      transition: all .3s;
+      opacity: 0;
+    }
+    .expand {
+      opacity: 1;
+      height: 100%;
+      padding-bottom: 100000px;
+    }
+    .expand .nav-list {
+      display: block !important;
+      width: 100%;
+      .searchType {
+        width: 10%;
+      }
+      .el-autocomplete, .el-dropdown {
+        width: 85%;
+      }
+    }
+    .nav-list2 {
+      text-align: center;
+      /*margin-top: 4.375rem;*/
+      padding: 0;
+      display: flex;
+      flex-flow: row wrap;
+      li {
+        list-style: none;
+        width: 50%;
+        margin-bottom: 25px;
+      }
+    }
+    .smenu {
+      width: 100% !important;
+      right: 0 !important;
+      li {
+        width: 100% !important;
+        margin-bottom: 0;
+        a {
+          width: 100% !important;
+        }
+      }
+    }
+    .nav-logo{
+      margin-left: 10px;
+    }
+  }
+
+  @media (max-width: 510px) {
+    .w-box h1 a{
+      background: url(../assets/images/L.png) no-repeat;
+      width: 72px;
+    }
+    .nav-list{
+      display: none !important;
+    }
+  }
+
   // 用户信息弹出
   .nav-user-wrapper {
     position: absolute;
@@ -1218,6 +1455,9 @@
         background: #bdbdbd;
       }
     }
+    .nav-list{
+      display: none;
+    }
   }
 
   @media (min-width: 1px) {
@@ -1260,6 +1500,66 @@
   .disappear {
     display: none;
   }
+
+  .searchType {
+    float: left;
+    width: 62px;
+    text-align: center;
+    position: relative;
+    .sehType-name {
+      height: 20px;
+      font-size: 12px;
+      color: #2f3645;
+      line-height: 20px;
+      margin: 11px 0;
+      cursor: pointer;
+      .arrow {
+        -webkit-transition: all ease-in-out 0.3s;
+        -moz-transition: all ease-in-out 0.3s;
+        -o-transition: all ease-in-out 0.3s;
+        transition: all ease-in-out 0.3s;
+        vertical-align: middle;
+        display: inline-block;
+        margin-left: 2px;
+        background: url(../assets/images/igao7_spirit.png) no-repeat -361px -14px;
+        width: 7px;
+        height: 4px;
+      }
+      &:hover .arrow {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+      }
+    }
+    .sehType-list {
+      /*display: none;*/
+      position: absolute;
+      z-index: 101;
+      left: 0px;
+      top: 40px;
+      width: 62px;
+      text-align: center;
+      border-top: 0;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+      background: #fff;
+      p {
+        line-height: 30px;
+        cursor: pointer;
+        font-size: 12px;
+        &:link, &:visited {
+          color: #666;
+          cursor: pointer;
+          text-decoration: none;
+        }
+        &:hover {
+          background: #F60;
+          color: #fff;
+        }
+      }
+    }
+  }
+
 
 </style>
 

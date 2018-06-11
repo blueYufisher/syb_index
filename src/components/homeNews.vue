@@ -101,6 +101,17 @@
   }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @media (max-width: 1220px) {
+    .home_news{
+      width: 48% !important;
+    }
+  }
+  @media (max-width: 768px) {
+    .home_news{
+      width: 100% !important;
+    }
+  }
+
   [v-cloak] {
     display: none;
   }
@@ -110,8 +121,8 @@
 
   .home_news {
     width: 600px;
-    /*height: 180px;*/
-    /*padding: 15px 0;*/
+    height: 180px;
+    padding: 15px 0;
   }
 
   .fr {
@@ -180,6 +191,9 @@
   .home_news li {
     padding: 4px 0 4px 15px;
     background: url(../assets/images/icon_org.jpg) no-repeat 0 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .home_news li span {

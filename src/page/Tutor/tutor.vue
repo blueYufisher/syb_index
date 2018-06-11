@@ -28,7 +28,8 @@
                       </p>
                       <div class="cnt">
                           <h4><router-link :to="{path:'/detail', query:{type: 6, id: tutor.id}}" target="_blank"><a target="_blank"><b>{{tutor.title}}</b></a></router-link></h4>
-                          <p class="source">浏览次数：{{tutor.visit}} &#160;|&#160;{{tutor.releaseTime}}</p>
+                          <p class="source">浏览次数：{{tutor.visit}} &#160;|&#160;{{tutor.releaseTime}}&#160;&#160;
+                            评论：{{tutor.comments}}</p>
                           <p class="summary">项目简介： {{tutor.note}} </p>
                       </div>
                     </li>
@@ -160,7 +161,50 @@
   }
 </script>
 <style scoped lang="scss" type="text/scss">
-
+  @media (max-width: 1220px) {
+    .w{
+      width: 100%;
+    }
+    .w245{
+      width: 18%!important;
+      margin-right: 2%;
+    }
+    .w670{
+      width: 78%!important;
+      margin-left: 2%;
+    }
+    .news-list {
+      .img {
+        width: 10%;
+        img {
+          width: 100% !important;
+          height: auto;
+        }
+      }
+      .cnt{
+        width: 85%!important;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .w245{
+      display: none;
+    }
+    .w670{
+      width: 95%!important;
+    }
+  }
+  @media (max-width: 510px) {
+    .news-list {
+      .img {
+        display: none;
+      }
+      .cnt{
+        width: 95%!important;
+        margin-left: 2%;
+      }
+    }
+  }
   /*面包屑*/
   .bread_crumbs { /*border-top:1px solid #dbdbdb;*/
     border-bottom: 1px solid #dbdbdb;
@@ -211,7 +255,7 @@
   }
 
   .container {
-    width: 1220px;
+    width: 100%;
     margin: 0 auto;
     .news_padding {
       padding: 25px 0 0;

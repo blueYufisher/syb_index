@@ -2,7 +2,10 @@
   <div class="about">
     <dl class="qiyejs clearfix">
       <dt class="img1">
-        <img src="../../assets/images/643507226585700506.jpg" title="关于我们.jpg" alt="关于我们.jpg">
+        <!--<img src="../../assets/images/643507226585700506.jpg" title="关于我们.jpg" alt="关于我们.jpg">-->
+        <video poster="http://job.gdut.edu.cn/syb/video/643507226585700506.png" controls preload="meta">
+          <source src="http://job.gdut.edu.cn/syb/0522.mp4" type="video/mp4">
+        </video>
       </dt>
       <dd class="text fr">
         <h2>广东工业大学创业（孵化）基地</h2>
@@ -21,7 +24,7 @@
           <p class="text">创立年份</p>
         </li>
         <li>
-          <p><strong>100</strong>个</p>
+          <p><strong>103</strong>个</p>
           <p class="text">项目在孵</p>
         </li>
         <li>
@@ -70,19 +73,51 @@
   }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @media (max-width: 1110px) {
+    .qiyejs .img1, .qiyejs .img2 {
+      width: 95%!important;
+      margin: 0 auto!important;
+      float: none!important;
+      img{
+        /*margin: 0 auto;*/
+        width: 100%!important;
+        height: auto!important;
+      }
+    }
+    .qiyejs .text{
+      float: none!important;
+      width: 95%!important;
+      margin: 0 auto!important;
+      h2{
+        height: auto!important;
+      }
+    }
+    .shizhibuyi{
+      height: auto!important;
+    }
+    .faznumber{
+      li{
+        width: 50%!important;
+      }
+    }
+  }
   .qiyejs {
     margin-top: 35px;
     /*padding-top: 51px;*/
     .img1 {
       float: left;
       overflow: hidden;
-      img {
+      img,video {
         display: block;
         width: 553px;
         height: 411px;
         -webkit-transition: all 0.5s;
         -moz-transition: all 0.5s;
         -o-transition: all 0.5s;
+        source{
+          width: 553px;
+          height: 411px;
+        }
       }
     }
     .img2 {
@@ -156,7 +191,7 @@
     padding-top: 60px;
     /*padding-bottom: 67px;*/
     ul {
-      width: 1150px;
+      width: 95%;
       padding-left: 43px;
       li {
         float: left;
