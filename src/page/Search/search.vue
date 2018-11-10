@@ -274,7 +274,7 @@
         this._getSearch()
         this.loading = true
       },
-      _getSearch () {
+      _getSearch ()  {
         let infoProj = getStore('info_proj')
         if (infoProj === '1') {
           let ints = getStore('ints')
